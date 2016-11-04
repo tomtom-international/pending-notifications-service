@@ -20,17 +20,10 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- Use the TomTom Java Developer POM. -->
-    <parent>
-        <groupId>com.tomtom.pom</groupId>
-        <artifactId>java-developer-pom</artifactId>
-        <version>1.27</version>
-    </parent>
-
     <!-- Define our own top-level POM. -->
     <groupId>com.tomtom.services</groupId>
     <artifactId>pending-notifications-service</artifactId>
-    <version>1.1.0</version>
+    <version>1.2.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
     <name>Pending Notifications Service</name>
@@ -48,8 +41,6 @@
         <url>http://tomtom.com</url>
     </organization>
 
-    <url>${tomtomSiteUrl}/${GIT.PROJECT.NAME}/${project.version}</url>
-
     <developers>
         <developer>
             <id>ribu</id>
@@ -63,102 +54,67 @@
         </developer>
     </developers>
 
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <url>http://tomtom.com</url>
+
+    <scm>
+        <url>http://github.com/tomtom-international/pending-notifications-service</url>
+    </scm>
+
     <properties>
+        <coveralls-maven-plugin.repoToken>x</coveralls-maven-plugin.repoToken>
 
-        <!-- General properties. -->
-        <project.java-version.source>1.8</project.java-version.source>
-        <project.java-version.target>${project.java-version.source}</project.java-version.target>
+        <!-- Java and build properties. -->
+        <jdk.version>1.8</jdk.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <!-- To check the JVM very strictly, add:
-            <project.java-version.jvm>1.6.0_37-b06</project.java-version.jvm>
-        -->
-        <targetJdk>${project.java-version.target}</targetJdk>
-        <maven.compiler.source>${project.java-version.source}</maven.compiler.source>
-        <maven.compiler.target>${project.java-version.target}</maven.compiler.target>
-        <maven.jetty.port>8080</maven.jetty.port>
-        <source.encoding>UTF-8</source.encoding>
-        <project.build.sourceEncoding>${source.encoding}</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>${source.encoding}</project.reporting.outputEncoding>
+        <!-- HTTP server. -->
+        <maven.httpserver.port>8080</maven.httpserver.port>
+        <maven.httpserver.root>/</maven.httpserver.root>
 
-        <maven.version>3.2.1</maven.version>
-
-        <!-- This is seperate so that the full version matching spec. can be changed by profile when
-             using Intellij, which uses a built-in Maven 3.0.5 for POM autodiscovery.
-        -->
-        <enforced.maven.version.spec>[${maven.version}]</enforced.maven.version.spec>
-        <versionMaven>${maven.version}</versionMaven>
-
-        <!-- To check the JVM very strictly, add:
-            <versionJVM>${project.java-version.jvm}</versionJVM>
-        -->
+        <!-- Maven plugin versions. -->
+        <coveralls-maven-plugin.version>4.2.0</coveralls-maven-plugin.version>
+        <doxia-module-confluence.version>1.3</doxia-module-confluence.version>
+        <jacoco-maven-plugin.version>0.7.7.201606060606</jacoco-maven-plugin.version>
+        <maven-compiler-plugin.version>3.5.1</maven-compiler-plugin.version>
+        <maven-javadoc-plugin.version>2.10.4</maven-javadoc-plugin.version>
+        <maven-jetty-plugin.version>8.1.9.v20130131</maven-jetty-plugin.version>
+        <maven-project-info-reports-plugin.version>2.9</maven-project-info-reports-plugin.version>
+        <maven-remote-resources-plugin.version>1.5</maven-remote-resources-plugin.version>
+        <maven-site-plugin.version>3.5.1</maven-site-plugin.version>
+        <maven-source-plugin.version>3.0.1</maven-source-plugin.version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
+        <maven-tomcat-plugin.version>2.2</maven-tomcat-plugin.version>
+        <maven-war-plugin.version>2.3</maven-war-plugin.version>
 
         <!-- TomTom module. -->
-        <speedtools.version>3.0.12</speedtools.version>
+        <speedtools.version>3.0.24</speedtools.version>
 
         <!-- Library versions - these are not re-used from the top-level POM to simulate stand-alone usage. -->
-        <akka.version>2.3.0</akka.version>
+        <akka.version>2.3.15</akka.version>
         <apache-commons-lang.version>3.0</apache-commons-lang.version>
         <annotations.version>9.0.4</annotations.version>
         <commons-httpclient.version>3.1</commons-httpclient.version>
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <javax.inject.version>1</javax.inject.version>
-        <junit.version>4.9</junit.version>
-        <guava.version>17.0</guava.version>
-        <guice.version>3.0</guice.version>
+        <junit.version>4.12</junit.version>
+        <guava.version>19.0</guava.version>
+        <guice.version>4.1.0</guice.version>
         <jsr305.version>3.0.0</jsr305.version>
         <log4j.version>1.2.17</log4j.version>
-        <mongo-java-driver.version>3.1.1</mongo-java-driver.version>
-        <slf4j.version>1.7.2</slf4j.version>
-        <resteasy.version>3.0.11.Final</resteasy.version>
-        <jackson.version>2.5.2</jackson.version>
-
-        <!-- Maven plugin versions. -->
-        <doxia-module-confluence.version>1.3</doxia-module-confluence.version>
-        <findbugs-maven-plugin.version>2.5.2</findbugs-maven-plugin.version>
-        <maven-pmd-plugin.version>2.7.1</maven-pmd-plugin.version>
-        <maven-remote-resources-plugin.version>1.4</maven-remote-resources-plugin.version>
-        <maven-surefire-plugin.version>2.13</maven-surefire-plugin.version>
-        <maven-war-plugin.version>2.3</maven-war-plugin.version>
-        <maven-jetty-plugin.version>8.1.9.v20130131</maven-jetty-plugin.version>
-        <maven-tomcat-plugin.version>2.2</maven-tomcat-plugin.version>
-
-        <maven.httpserver.port>8080</maven.httpserver.port>
-        <maven.httpserver.root>/</maven.httpserver.root>
-
-        <!-- A reference to the root of the project in source control. -->
-        <GIT.PROJECT.NAME>notifications-service</GIT.PROJECT.NAME>
-        <SVN.PROJECT.NAME/>
-        <git.host>stash.tomtomgroup.com:7999</git.host>
-
-        <!-- TomTom Wikiupdate plugin -->
-        <WIKIUPDATE.CONFLUENCE.URL>http://vos.intra.local</WIKIUPDATE.CONFLUENCE.URL>
-        <WIKIUPDATE.USER>mavenuser</WIKIUPDATE.USER>
-        <WIKIUPDATE.PASSWORD>z2y6Es8kJW</WIKIUPDATE.PASSWORD>
-        <WIKIUPDATE.SPACE>SPEEDTOOLS</WIKIUPDATE.SPACE>
-        <WIKIUPDATE.RELEASE.PAGE>DefaultReleaseDeployments</WIKIUPDATE.RELEASE.PAGE>
-        <WIKIUPDATE.SNAPSHOT.PAGE/>
-        <tomtom.mailinglist.skip>true</tomtom.mailinglist.skip>
-
-        <!-- The default root of where the TomTom mailing list plugin writes information. -->
-        <tomtomMailingListUrl/>
+        <mongo-java-driver.version>3.3.0</mongo-java-driver.version>
+        <resteasy.version>3.0.19.Final</resteasy.version>
+        <slf4j.version>1.7.21</slf4j.version>
     </properties>
-
-    <!-- This repository is listed here for bootstrap reasons only; just in case you did not
-         copy config/settings.xml to $HOME/.m2/settings.xml.
-
-         It is used to be able to find and fetch the TomTom Super POM the 1st time. After that,
-         the right repositories are automatically inherited from the TomTom Super POM.
-    -->
-    <repositories>
-        <repository>
-            <id>boot</id>
-            <name>TomTom Public Repository</name>
-            <url>http://nexus-ams.tomtomgroup.com:8081/nexus/content/groups/public</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 
     <dependencies>
         <dependency>
@@ -274,45 +230,22 @@
         </dependency>
 
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-core</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>${jackson.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.fasterxml.jackson.module</groupId>
-            <artifactId>jackson-module-jaxb-annotations</artifactId>
-            <version>${jackson.version}</version>
+            <groupId>commons-httpclient</groupId>
+            <artifactId>commons-httpclient</artifactId>
+            <version>${commons-httpclient.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxb-provider</artifactId>
-            <version>${resteasy.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>javax.xml.stream</groupId>
-                    <artifactId>stax-api</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-jaxrs</artifactId>
+            <artifactId>async-http-servlet-3.0</artifactId>
             <version>${resteasy.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
-            <artifactId>jaxrs-api</artifactId>
+            <artifactId>resteasy-client</artifactId>
             <version>${resteasy.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -329,20 +262,33 @@
 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxb-provider</artifactId>
+            <version>${resteasy.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>javax.xml.stream</groupId>
+                    <artifactId>stax-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson2-provider</artifactId>
             <version>${resteasy.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
-            <artifactId>async-http-servlet-3.0</artifactId>
+            <artifactId>resteasy-jaxrs</artifactId>
             <version>${resteasy.version}</version>
         </dependency>
 
         <dependency>
-            <groupId>commons-httpclient</groupId>
-            <artifactId>commons-httpclient</artifactId>
-            <version>${commons-httpclient.version}</version>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>tjws</artifactId>
+            <version>${resteasy.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -356,13 +302,103 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>${maven-war-plugin.version}</version>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>pre-unit-test</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.eluder.coveralls</groupId>
+                <artifactId>coveralls-maven-plugin</artifactId>
+                <version>${coveralls-maven-plugin.version}</version>
                 <configuration>
-                    <attachClasses>true</attachClasses>
-                    <classesClassifier>classes</classesClassifier>
+                    <repoToken>${coveralls-maven-plugin.repoToken}</repoToken>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <forkCount>1</forkCount>
+                    <reuseForks>true</reuseForks>
+                    <!--suppress MavenModelInspection -->
+                    <argLine>${argLine} -Xmx1024m</argLine>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${maven-project-info-reports-plugin.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-site-plugin</artifactId>
+                <version>${maven-site-plugin.version}</version>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven-compiler-plugin.version}</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-remote-resources-plugin</artifactId>
+                <version>${maven-remote-resources-plugin.version}</version>
             </plugin>
 
             <plugin>
@@ -385,6 +421,7 @@
                 </configuration>
             </plugin>
 
+            <!-- Run using Tomcat server. -->
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
@@ -403,4 +440,33 @@
             </resource>
         </resources>
     </build>
+
+    <reporting>
+        <plugins>
+
+            <!-- Coverage reports using JaCoCo. -->
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco-maven-plugin.version}</version>
+            </plugin>
+
+            <!-- Project reports. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-project-info-reports-plugin</artifactId>
+                <version>${maven-project-info-reports-plugin.version}</version>
+                <configuration>
+                    <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+                </configuration>
+            </plugin>
+
+            <!-- JavaDoc reports. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${maven-javadoc-plugin.version}</version>
+            </plugin>
+        </plugins>
+    </reporting>
 </project>

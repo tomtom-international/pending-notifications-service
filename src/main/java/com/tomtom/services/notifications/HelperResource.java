@@ -16,13 +16,12 @@
 
 package com.tomtom.services.notifications;
 
-import org.jboss.resteasy.annotations.Suspend;
-import org.jboss.resteasy.spi.AsynchronousResponse;
-
 import javax.annotation.Nonnull;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -54,7 +53,7 @@ public interface HelperResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("version")
-    void getVersion(@Nonnull @Suspend(ApiConstants.SUSPEND_TIMEOUT) AsynchronousResponse response);
+    void getVersion(@Suspended @Nonnull AsyncResponse response);
 
     /**
      * This method returns whether the service is operational or not (status code 204 is OK).
@@ -63,5 +62,5 @@ public interface HelperResource {
      */
     @GET
     @Path("status")
-    void getStatus(@Nonnull @Suspend(ApiConstants.SUSPEND_TIMEOUT) AsynchronousResponse response);
+    void getStatus(@Suspended @Nonnull AsyncResponse response);
 }

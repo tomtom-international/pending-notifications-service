@@ -26,13 +26,13 @@ import com.tomtom.speedtools.apivalidation.exceptions.ApiIntegerOutOfRangeExcept
 import com.tomtom.speedtools.mongodb.EntityNotFoundException;
 import com.tomtom.speedtools.mongodb.EntityRemoveException;
 import com.tomtom.speedtools.rest.ResourceProcessor;
-import org.jboss.resteasy.spi.AsynchronousResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.inject.Inject;
+import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import java.util.HashSet;
@@ -74,7 +74,7 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
     public void getAllPendingNotifications(
             final int offset,
             final int count,
-            @Nonnull final AsynchronousResponse response) {
+            @Nonnull final AsyncResponse response) {
         assert response != null;
 
         /*
@@ -108,7 +108,7 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
             result.validate();
 
             // Make sure the response contains the right HTTP code and body.
-            response.setResponse(Response.status(Status.OK).entity(result).build());
+            response.resume(Response.status(Status.OK).entity(result).build());
 
             /**
              * Return successfully from the processor thread. Note the 'response' MUST be set before
@@ -122,7 +122,7 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
     public void getPendingNotificationsForDeviceAndService(
             @Nonnull final String deviceId,
             @Nonnull final String serviceId,
-            @Nonnull final AsynchronousResponse response) {
+            @Nonnull final AsyncResponse response) {
         assert deviceId != null;
         assert serviceId != null;
         assert response != null;
@@ -139,16 +139,16 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
                 if (contains) {
 
                     // Return 200 if it exists.
-                    response.setResponse(Response.status(Status.OK).build());
+                    response.resume(Response.status(Status.OK).build());
                 } else {
 
                     // Return 404 if no notifications exist for this device for this specific service.
-                    response.setResponse(Response.status(Status.NOT_FOUND).build());
+                    response.resume(Response.status(Status.NOT_FOUND).build());
                 }
             } catch (final EntityNotFoundException ignored) {
 
                 // Return 404 if the device doesn't exist.
-                response.setResponse(Response.status(Status.NOT_FOUND).build());
+                response.resume(Response.status(Status.NOT_FOUND).build());
             }
             return Futures.successful(null);
         });
@@ -157,7 +157,7 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
     @Override
     public void getPendingNotificationsForDevice(
             @Nonnull final String deviceId,
-            @Nonnull final AsynchronousResponse response) {
+            @Nonnull final AsyncResponse response) {
         assert deviceId != null;
         assert response != null;
 
@@ -175,11 +175,11 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
                 result.validate();
 
                 // Return 200 if it exists.
-                response.setResponse(Response.status(Status.OK).entity(result).build());
+                response.resume(Response.status(Status.OK).entity(result).build());
             } catch (final EntityNotFoundException ignored) {
 
                 // Return 404 if the device doesn't exist.
-                response.setResponse(Response.status(Status.NOT_FOUND).build());
+                response.resume(Response.status(Status.NOT_FOUND).build());
             }
             return Futures.successful(null);
         });
@@ -189,7 +189,7 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
     public void createPendingNotificationForDeviceAndService(
             @Nonnull final String deviceId,
             @Nullable final String serviceId,
-            @Nonnull final AsynchronousResponse response) {
+            @Nonnull final AsyncResponse response) {
         assert deviceId != null;
         assert response != null;
 
@@ -210,7 +210,7 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
             }
             notificationDao.putServiceIds(deviceId, serviceIds);
 
-            response.setResponse(Response.status(Status.CREATED).build());
+            response.resume(Response.status(Status.CREATED).build());
             return Futures.successful(null);
         });
     }
@@ -218,7 +218,7 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
     @Override
     public void createPendingNotificationForDevice(
             @Nonnull final String deviceId,
-            @Nonnull final AsynchronousResponse response) {
+            @Nonnull final AsyncResponse response) {
         assert deviceId != null;
         assert response != null;
 
@@ -230,7 +230,7 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
     public void deletePendingNotificationsForDeviceAndService(
             @Nonnull final String deviceId,
             @Nonnull final String serviceId,
-            @Nonnull final AsynchronousResponse response) {
+            @Nonnull final AsyncResponse response) {
         assert deviceId != null;
         assert response != null;
 
@@ -252,7 +252,7 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
                 // Ignore.
             }
 
-            response.setResponse(Response.status(Status.NO_CONTENT).build());
+            response.resume(Response.status(Status.NO_CONTENT).build());
             return Futures.successful(null);
         });
     }
@@ -260,7 +260,7 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
     @Override
     public void deletePendingNotificationsForDevice(
             @Nonnull final String deviceId,
-            @Nonnull final AsynchronousResponse response) {
+            @Nonnull final AsyncResponse response) {
         assert deviceId != null;
         assert response != null;
 
@@ -273,7 +273,7 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
             } catch (final EntityRemoveException ignored) {
                 // Ignored.
             }
-            response.setResponse(Response.status(Status.NO_CONTENT).build());
+            response.resume(Response.status(Status.NO_CONTENT).build());
             return Futures.successful(null);
         });
     }

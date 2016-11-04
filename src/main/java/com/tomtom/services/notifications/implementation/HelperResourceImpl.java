@@ -16,17 +16,15 @@
 
 package com.tomtom.services.notifications.implementation;
 
-import com.tomtom.services.notifications.ApiConstants;
 import com.tomtom.services.notifications.HelperResource;
 import com.tomtom.services.notifications.dto.VersionDTO;
 import com.tomtom.speedtools.maven.MavenProperties;
-import org.jboss.resteasy.annotations.Suspend;
-import org.jboss.resteasy.spi.AsynchronousResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
+import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
@@ -81,7 +79,7 @@ public class HelperResourceImpl implements HelperResource {
     }
 
     @Override
-    public void getVersion(@Nonnull @Suspend(ApiConstants.SUSPEND_TIMEOUT) final AsynchronousResponse response) {
+    public void getVersion(@Nonnull final AsyncResponse response) {
         assert response != null;
 
         // Just return version number.
@@ -95,15 +93,15 @@ public class HelperResourceImpl implements HelperResource {
         result.validate();
 
         // And include it with a 200 return code.
-        response.setResponse(Response.ok(result).build());
+        response.resume(Response.ok(result).build());
     }
 
     @Override
-    public void getStatus(@Nonnull @Suspend(ApiConstants.SUSPEND_TIMEOUT) final AsynchronousResponse response) {
+    public void getStatus(@Nonnull final AsyncResponse  response) {
         assert response != null;
         LOG.info("getStatus: all OK");
 
         // Simply return 204.
-        response.setResponse(Response.status(Status.NO_CONTENT).build());
+        response.resume(Response.status(Status.NO_CONTENT).build());
     }
 }

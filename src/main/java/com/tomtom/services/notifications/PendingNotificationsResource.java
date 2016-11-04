@@ -19,12 +19,12 @@ package com.tomtom.services.notifications;
 
 import com.tomtom.services.notifications.dto.AllPendingNotificationsDTO;
 import com.tomtom.services.notifications.dto.ValuesDTO;
-import org.jboss.resteasy.annotations.Suspend;
-import org.jboss.resteasy.spi.AsynchronousResponse;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.ws.rs.*;
+import javax.ws.rs.container.AsyncResponse;
+import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -59,7 +59,7 @@ public interface PendingNotificationsResource {
     void getAllPendingNotifications(
             @QueryParam(PARAM_OFFSET) @DefaultValue(DEFAULT_OFFSET) final int offset,
             @QueryParam(PARAM_COUNT) @DefaultValue(DEFAULT_COUNT) final int count,
-            @Nonnull @Suspend(ApiConstants.SUSPEND_TIMEOUT) AsynchronousResponse response);
+            @Suspended @Nonnull AsyncResponse response);
 
     /**
      * Get the pending notifications for a specific device. The result of this service call is just an HTTP result code.
@@ -88,13 +88,13 @@ public interface PendingNotificationsResource {
     void getPendingNotificationsForDeviceAndService(
             @Nonnull @PathParam(PARAM_DEVICE_ID) String deviceId,
             @Nonnull @PathParam(PARAM_SERVICE_ID) String serviceId,
-            @Nonnull @Suspend(ApiConstants.SUSPEND_TIMEOUT) AsynchronousResponse response);
+            @Suspended @Nonnull AsyncResponse response);
 
     @GET
     @Path("/notifications/{" + PARAM_DEVICE_ID + '}')
     void getPendingNotificationsForDevice(
             @Nonnull @PathParam(PARAM_DEVICE_ID) String deviceId,
-            @Nonnull @Suspend(ApiConstants.SUSPEND_TIMEOUT) AsynchronousResponse response);
+            @Suspended @Nonnull AsyncResponse response);
 
     /**
      * Create a pending notification for a device.
@@ -114,13 +114,13 @@ public interface PendingNotificationsResource {
     void createPendingNotificationForDeviceAndService(
             @Nonnull @PathParam(PARAM_DEVICE_ID) String deviceId,
             @Nullable @PathParam(PARAM_SERVICE_ID) String serviceId,
-            @Nonnull @Suspend(ApiConstants.SUSPEND_TIMEOUT) AsynchronousResponse response);
+            @Suspended @Nonnull AsyncResponse response);
 
     @POST
     @Path("/notifications/{" + PARAM_DEVICE_ID + '}')
     void createPendingNotificationForDevice(
             @Nonnull @PathParam(PARAM_DEVICE_ID) String deviceId,
-            @Nonnull @Suspend(ApiConstants.SUSPEND_TIMEOUT) AsynchronousResponse response);
+            @Suspended @Nonnull AsyncResponse response);
 
     /**
      * Delete pending notifications for an ID.
@@ -141,11 +141,11 @@ public interface PendingNotificationsResource {
     void deletePendingNotificationsForDeviceAndService(
             @Nonnull @PathParam(PARAM_DEVICE_ID) String deviceId,
             @Nonnull @PathParam(PARAM_SERVICE_ID) String serviceId,
-            @Nonnull @Suspend(ApiConstants.SUSPEND_TIMEOUT) AsynchronousResponse response);
+            @Suspended @Nonnull AsyncResponse response);
 
     @DELETE
     @Path("/notifications/{" + PARAM_DEVICE_ID + '}')
     void deletePendingNotificationsForDevice(
             @Nonnull @PathParam(PARAM_DEVICE_ID) String deviceId,
-            @Nonnull @Suspend(ApiConstants.SUSPEND_TIMEOUT) AsynchronousResponse response);
+            @Suspended @Nonnull AsyncResponse response);
 }
