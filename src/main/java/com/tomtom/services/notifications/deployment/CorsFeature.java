@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tomtom.services.notification.deployment;
+package com.tomtom.services.notifications.deployment;
 
 import org.jboss.resteasy.plugins.interceptors.CorsFilter;
 

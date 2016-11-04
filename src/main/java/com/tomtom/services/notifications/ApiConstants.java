@@ -15,7 +15,7 @@
  */
 
 
-package com.tomtom.services.notification;
+package com.tomtom.services.notifications;
 
 /**
  * This utility class contains constants used in the Web services API.

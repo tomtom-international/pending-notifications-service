@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tomtom.services.notification.dao;
+package com.tomtom.services.notifications.dao;
 
 import com.google.inject.Binder;
 import com.google.inject.Module;
@@ -22,10 +22,10 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 import com.mongodb.Mongo;
 import com.mongodb.ServerAddress;
-import com.tomtom.services.notification.dao.mappers.NotificationsMapperRegistry;
-import com.tomtom.services.notification.dao.memory.NotificationDaoMemoryImpl;
-import com.tomtom.services.notification.dao.mongodb.MongoDBProperties;
-import com.tomtom.services.notification.dao.mongodb.NotificationDaoMongoDBImpl;
+import com.tomtom.services.notifications.dao.mappers.NotificationsMapperRegistry;
+import com.tomtom.services.notifications.dao.memory.NotificationDaoMemoryImpl;
+import com.tomtom.services.notifications.dao.mongodb.MongoDBProperties;
+import com.tomtom.services.notifications.dao.mongodb.NotificationDaoMongoDBImpl;
 import com.tomtom.speedtools.mongodb.MongoConnectionCache;
 import com.tomtom.speedtools.mongodb.MongoDB;
 import com.tomtom.speedtools.mongodb.MongoDBConnectionException;

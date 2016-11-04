@@ -15,13 +15,13 @@
  */
 
 
-package com.tomtom.services.notification.implementation;
+package com.tomtom.services.notifications.implementation;
 
 import akka.dispatch.Futures;
-import com.tomtom.services.notification.PendingNotificationsResource;
-import com.tomtom.services.notification.dao.NotificationDao;
-import com.tomtom.services.notification.dto.AllPendingNotificationsDTO;
-import com.tomtom.services.notification.dto.ValuesDTO;
+import com.tomtom.services.notifications.PendingNotificationsResource;
+import com.tomtom.services.notifications.dao.NotificationDao;
+import com.tomtom.services.notifications.dto.AllPendingNotificationsDTO;
+import com.tomtom.services.notifications.dto.ValuesDTO;
 import com.tomtom.speedtools.apivalidation.exceptions.ApiIntegerOutOfRangeException;
 import com.tomtom.speedtools.mongodb.EntityNotFoundException;
 import com.tomtom.speedtools.mongodb.EntityRemoveException;

@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.tomtom.services.notification.deployment;
+package com.tomtom.services.notifications.deployment;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.google.inject.Binder;
-import com.tomtom.services.notification.PendingNotificationsResource;
-import com.tomtom.services.notification.RootResource;
-import com.tomtom.services.notification.implementation.PendingNotificationsResourceImpl;
-import com.tomtom.services.notification.implementation.RootResourceImpl;
+import com.tomtom.services.notifications.PendingNotificationsResource;
+import com.tomtom.services.notifications.HelperResource;
+import com.tomtom.services.notifications.implementation.PendingNotificationsResourceImpl;
+import com.tomtom.services.notifications.implementation.HelperResourceImpl;
 import com.tomtom.speedtools.guice.GuiceConfigurationModule;
 import com.tomtom.speedtools.rest.GeneralExceptionMapper;
 import org.slf4j.Logger;
@@ -70,10 +70,10 @@ public class DeploymentModule extends GuiceConfigurationModule {
         GeneralExceptionMapper.addCustomException(JsonParseException.class, false, Status.BAD_REQUEST);
 
         // Bind APIs to their implementation.
-        binder.bind(RootResource.class).to(RootResourceImpl.class).in(Singleton.class);
+        binder.bind(HelperResource.class).to(HelperResourceImpl.class).in(Singleton.class);
         binder.bind(PendingNotificationsResource.class).to(PendingNotificationsResourceImpl.class).in(Singleton.class);
 
         // Bind start-up checking class (example).
-        binder.bind(com.tomtom.services.notification.deployment.StartupCheck.class).asEagerSingleton();
+        binder.bind(com.tomtom.services.notifications.deployment.StartupCheck.class).asEagerSingleton();
     }
 }

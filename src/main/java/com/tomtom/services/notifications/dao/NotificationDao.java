@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tomtom.services.notification.dao;
+package com.tomtom.services.notifications.dao;
 
 import com.tomtom.speedtools.mongodb.EntityNotFoundException;
 import com.tomtom.speedtools.mongodb.EntityRemoveException;

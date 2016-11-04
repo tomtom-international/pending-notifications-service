@@ -1,23 +1,28 @@
-# PENDING NOTIFICATIONS SERVICE
+# Read Me of the Pending Notification Service
 
-## Purpose
+[![Build Status](https://img.shields.io/travis/tomtom-international/notification-service.svg?maxAge=3600)](https://travis-ci.org/tomtom-international/notification-service)
+[![Coverage Status](https://coveralls.io/repos/github/tomtom-international/notification-service/badge.svg?branch=master&maxAge=3600)](https://coveralls.io/github/tomtom-international/notification-service?branch=master)
+[![License](http://img.shields.io/badge/license-APACHE2-blue.svg)]()
+[![Release](https://img.shields.io/github/release/tomtom-international/notificationn-service.svg?maxAge=3600)](https://github.com/tomtom-international/notification-service/releases)
 
-The *Pending Notifications Service* offers a way to provide notifications for devices, which can be retrieved in a polling
-fashion.
+## Introduction
 
-A 'pending notification' is a notification, waiting to be seen/retrieved by a device. As opposed to 'push notifications',
-which are pro-actively pushed by back-end server to a device. Pending notifications can be used instead of push notifications
+The *Pending Notification Service* offers a way to provide notifications for devices, which are retrieved in a polling
+fashion using a REST API, rather than a push channel.
+
+A 'pending notification' is a message of some sort, waiting to be seen/retrieved by a device. As opposed to 'push notifications',
+which are pro-actively pushed by back-end server to a device. These pending notifications can be used instead of push notifications
 if a push channel is not available.
 
 The service offers connected devices a way to figure out, in a very data usage friendly manner, whether it needs to
-contact a back-end service in a secure way. Contrary to common push notification solutions, pending notifications do not
+contact a back-end service in a secure way. Contrary to common push notification solutions, the pending notifications in this service do not
 contain any useful information themselves, other than redirecting the device to contact a specific service.
 
 Contacting the actual service to retrieve the information is not part of the pending notifications service itself.
 In general, this is a secured call to retrieve pending messages, fetch new firmware, get a new software
 configuration, or anything else.
 
-The pending notifications service is, like most push notifications services, a very generic service. It tries to
+The notification service is, like most push notification services, a very generic service. It tries to
 accommodate a wide range of use case, two of which are considered very common:
 
  1. A *single* back-end service wishes to notify devices to contact them in a secure way to retrieve more
@@ -335,3 +340,51 @@ And to retrieve and delete notifications for an ID:
 This should produce a list of IDs that have a pending notification.
 If there are none, this should produce something like: `{"total":0}`
 If there are some, it could produce something like: `{"total":5, ["123", ...]}`
+
+# License
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+# Using Git and `.gitignore`
+
+It's good practice to set up a personal global `.gitignore` file on your machine which filters a number of files
+on your file systems that you do not wish to submit to the Git repository. You can set up your own global
+`~/.gitignore_global` file by executing:
+`git config --global core.excludesfile ~/.gitignore_global`
+
+Note that running this command does not *create* the file, it just makes `git` use it. You need to create the
+file in advance yourself (with a simple text editor).
+
+In general, add the following file types to `~/.gitignore` (each entry should be on a separate line):
+`*.com *.class *.dll *.exe *.o *.so *.log *.sql *.sqlite *.tlog *.epoch *.swp *.hprof *.hprof.index *.releaseBackup *~`
+
+If you're using a Mac, filter:
+`.DS_Store* Thumbs.db`
+
+If you're using IntelliJ IDEA, filter:
+`*.iml *.iws .idea/`
+
+If you're using Eclips, filter:
+`.classpath .project .settings .cache`
+
+If you're using NetBeans, filter:
+`nb-configuration.xml *.orig`
+
+The local `.gitignore` file in the Git repository itself to reflect those file only that are produced by executing
+regular compile, build or release commands, such as:
+`target/ out/`
+
+# Bug Reports and New Feature Requests
+
+If you encounter any problems with this library, don't hesitate to use the `Issues` session to file your issues.
+Normally, one of our developers should be able to comment on them and fix.

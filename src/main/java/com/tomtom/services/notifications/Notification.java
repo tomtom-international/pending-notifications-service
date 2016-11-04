@@ -15,7 +15,7 @@
  */
 
 
-package com.tomtom.services.notification;
+package com.tomtom.services.notifications;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;

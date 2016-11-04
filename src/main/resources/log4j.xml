@@ -26,7 +26,7 @@
     </appender>
 
     <!-- Make sure we get all messages from our own domain. -->
-    <logger name="com.tomtom.services.notification">
+    <logger name="com.tomtom.services.notifications">
         <level value="debug"/>
     </logger>
 

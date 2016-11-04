@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.tomtom.services.notification.dao.mongodb;
+package com.tomtom.services.notifications.dao.mongodb;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
-import com.tomtom.services.notification.Notification;
-import com.tomtom.services.notification.dao.NotificationDao;
-import com.tomtom.services.notification.dao.mappers.NotificationMapper;
+import com.tomtom.services.notifications.Notification;
+import com.tomtom.services.notifications.dao.NotificationDao;
+import com.tomtom.services.notifications.dao.mappers.NotificationMapper;
 import com.tomtom.speedtools.json.Json;
 import com.tomtom.speedtools.mongodb.*;
 import com.tomtom.speedtools.mongodb.mappers.MapperException;

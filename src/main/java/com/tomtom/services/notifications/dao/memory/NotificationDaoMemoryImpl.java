@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.tomtom.services.notification.dao.memory;
+package com.tomtom.services.notifications.dao.memory;
 
-import com.tomtom.services.notification.dao.NotificationDao;
+import com.tomtom.services.notifications.dao.NotificationDao;
 import com.tomtom.speedtools.mongodb.EntityNotFoundException;
 
 import javax.annotation.Nonnull;

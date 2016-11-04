@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tomtom.services.notification.dao.mappers;
+package com.tomtom.services.notifications.dao.mappers;
 
 import com.tomtom.speedtools.mongodb.mappers.MapperRegistry;
 import com.tomtom.speedtools.mongodb.mappers.SchemaException;

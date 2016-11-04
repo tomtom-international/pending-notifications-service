@@ -15,10 +15,10 @@
  */
 
 
-package com.tomtom.services.notification;
+package com.tomtom.services.notifications;
 
-import com.tomtom.services.notification.dto.AllPendingNotificationsDTO;
-import com.tomtom.services.notification.dto.ValuesDTO;
+import com.tomtom.services.notifications.dto.AllPendingNotificationsDTO;
+import com.tomtom.services.notifications.dto.ValuesDTO;
 import org.jboss.resteasy.annotations.Suspend;
 import org.jboss.resteasy.spi.AsynchronousResponse;
 

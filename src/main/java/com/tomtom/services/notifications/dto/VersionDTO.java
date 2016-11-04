@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.tomtom.services.notification.dto;
+package com.tomtom.services.notifications.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.tomtom.services.notification.ApiConstants;
+import com.tomtom.services.notifications.ApiConstants;
 import com.tomtom.speedtools.apivalidation.ApiDTO;
 import com.tomtom.speedtools.utils.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;

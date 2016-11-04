@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.tomtom.services.notification.implementation;
+package com.tomtom.services.notifications.implementation;
 
-import com.tomtom.services.notification.ApiConstants;
-import com.tomtom.services.notification.RootResource;
-import com.tomtom.services.notification.dto.VersionDTO;
+import com.tomtom.services.notifications.ApiConstants;
+import com.tomtom.services.notifications.HelperResource;
+import com.tomtom.services.notifications.dto.VersionDTO;
 import com.tomtom.speedtools.maven.MavenProperties;
 import org.jboss.resteasy.annotations.Suspend;
 import org.jboss.resteasy.spi.AsynchronousResponse;
@@ -30,8 +30,8 @@ import javax.inject.Inject;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-public class RootResourceImpl implements RootResource {
-    private static final Logger LOG = LoggerFactory.getLogger(RootResourceImpl.class);
+public class HelperResourceImpl implements HelperResource {
+    private static final Logger LOG = LoggerFactory.getLogger(HelperResourceImpl.class);
 
     /**
      * These properties (actually only 1) gets injected by Google Guice from the properties file supplied
@@ -46,7 +46,7 @@ public class RootResourceImpl implements RootResource {
      * @param mavenProperties POM version.
      */
     @Inject
-    public RootResourceImpl(@Nonnull final MavenProperties mavenProperties) {
+    public HelperResourceImpl(@Nonnull final MavenProperties mavenProperties) {
         assert mavenProperties != null;
         this.mavenProperties = mavenProperties;
     }

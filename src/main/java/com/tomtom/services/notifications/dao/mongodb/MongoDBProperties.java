@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tomtom.services.notification.dao.mongodb;
+package com.tomtom.services.notifications.dao.mongodb;
 
 import com.tomtom.speedtools.guice.HasProperties;
 import com.tomtom.speedtools.guice.InvalidPropertyValueException;

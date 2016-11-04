@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.tomtom.services.notification;
+package com.tomtom.services.notifications;
 
 import org.jboss.resteasy.annotations.Suspend;
 import org.jboss.resteasy.spi.AsynchronousResponse;
@@ -31,7 +31,7 @@ import javax.ws.rs.core.MediaType;
  * service monitoring.
  */
 @Path("/pending")
-public interface RootResource {
+public interface HelperResource {
 
     /**
      * This method provides help info as HTML.
@@ -49,7 +49,7 @@ public interface RootResource {
      *
      * Return HTTP status 200.
      *
-     * @param response Version, {@link com.tomtom.services.notification.dto.VersionDTO}.
+     * @param response Version, {@link com.tomtom.services.notifications.dto.VersionDTO}.
      */
     @GET
     @Produces(MediaType.APPLICATION_JSON)

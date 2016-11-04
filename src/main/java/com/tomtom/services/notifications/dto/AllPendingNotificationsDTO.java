@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 
-package com.tomtom.services.notification.dto;
+package com.tomtom.services.notifications.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.tomtom.speedtools.apivalidation.ApiDTO;
-import com.tomtom.speedtools.objects.Immutables;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -41,37 +39,66 @@ import java.util.List;
  */
 @SuppressWarnings({"EqualsWhichDoesntCheckParameterClass", "NullableProblems"})
 @JsonInclude(Include.NON_EMPTY)
-public final class ValuesDTO extends ApiDTO {
+public final class AllPendingNotificationsDTO extends ApiDTO {
 
     @Nonnull
-    public List<String> values; // Mandatory field.
+    public Integer total;    // Mandatory field.
 
+    @JsonUnwrapped
+    @Nullable
+    public ValuesDTO ids;    // Optional field.
+
+    /**
+     * The method 'validate' is SpeedTools proprietary way of dealing with
+     * message body validation. Every property in this class is explicitly
+     * validated in this method.
+     *
+     * The SpeedTools API validation framework may seem a bit awkward at first
+     * (and it is a bit, to be frank), but it does have some advantages over
+     * annotations, such as that it accumulates all errors in a single response
+     * body, which is easily parseable by the client, and it allows for (almost)
+     * immutable data transfer objects. Any properties of a DTO using this framework
+     * can ONLY be used after ALL properties have been set; and reversely, no
+     * property can be set after one of them has ever been read.
+     */
     @Override
     public void validate() {
         validator().start();
-        validator().checkNotNull(true, "values", values);   // Mandatory.
+        validator().checkInteger(true, "total", total, 0, Integer.MAX_VALUE);   // Mandatory.
+        validator().checkNotNullAndValidate(false, "values", ids);           // Optional.
         validator().done();
     }
 
-    public ValuesDTO(@Nonnull final Collection<String> values) {
-        this.values = Immutables.listOf(values);
+    public AllPendingNotificationsDTO(
+            final int total,
+            @Nullable final List<String> ids) {
+        this.total = total;
+        this.ids = (ids == null) ? null : new ValuesDTO(ids);
     }
 
     @SuppressWarnings("UnusedDeclaration")
     @Deprecated
-    private ValuesDTO() {
+    private AllPendingNotificationsDTO() {
         // Default constructor required by JAX-B.
         super();
     }
 
-    @JsonValue
-    @Nullable
-    public List<String> getValues() {
-        return values;
+    @Nonnull
+    public Integer getTotal() {
+        return total;
     }
 
-    public void setValues(@Nonnull final Collection<String> values) {
-        this.values = Immutables.listOf(values);
+    @Nullable
+    public ValuesDTO getIds() {
+        return ids;
+    }
+
+    public void setTotal(@Nonnull final Integer total) {
+        this.total = total;
+    }
+
+    public void setIds(@Nullable final List<String> ids) {
+        this.ids = (ids == null) ? null : new ValuesDTO(ids);
     }
 
     @Override

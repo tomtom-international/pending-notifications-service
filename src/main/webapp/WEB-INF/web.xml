@@ -21,7 +21,7 @@
          version="3.0"
          metadata-complete="true">
 
-    <display-name>WakeUp Service REST API</display-name>
+    <display-name>Notification Service REST API</display-name>
 
     <context-param>
 
@@ -29,9 +29,13 @@
         <param-name>resteasy.guice.modules</param-name>
 
         <param-value>
+
+            <!-- Include the modules we need from the SpeedTools framework. -->
+            com.tomtom.speedtools.rest.ServicesModule,
+            <!-- Include the REST API and bootstrap module for deployment. -->
+
             com.tomtom.services.notification.dao.DaoModule,
-            com.tomtom.services.notification.deployment.DeploymentModule,
-            com.tomtom.speedtools.rest.ServicesModule
+            com.tomtom.services.notification.deployment.DeploymentModule
         </param-value>
     </context-param>
 
@@ -43,7 +47,7 @@
     <!-- Add cross-site scripting support for Javascript. -->
     <context-param>
         <param-name>resteasy.providers</param-name>
-        <param-value>com.tomtom.services.notification.deployment.CorsFeature</param-value>
+        <param-value>com.tomtom.services.notifications.deployment.CorsFeature</param-value>
     </context-param>
 
     <context-param>
