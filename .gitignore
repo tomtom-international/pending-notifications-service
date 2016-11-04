@@ -1,3 +1,4 @@
+src/main/resources/log4j/xml
 *.class
 
 # Mobile Tools for Java (J2ME)
