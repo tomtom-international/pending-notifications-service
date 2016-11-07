@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -22,7 +22,14 @@ import com.tomtom.services.notifications.dto.ValuesDTO;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.ws.rs.*;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
@@ -30,8 +37,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * This class defines the main REST API methods for the service.
  */
-@Path("/pending")
-@Produces(MediaType.APPLICATION_JSON)
+@Path("/notifications")
 public interface PendingNotificationsResource {
 
     public static final String PARAM_DEVICE_ID = "deviceId";
@@ -55,7 +61,8 @@ public interface PendingNotificationsResource {
      *                 see {@link AllPendingNotificationsDTO}.
      */
     @GET
-    @Path("/notifications")
+    @Path("")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     void getAllPendingNotifications(
             @QueryParam(PARAM_OFFSET) @DefaultValue(DEFAULT_OFFSET) final int offset,
             @QueryParam(PARAM_COUNT) @DefaultValue(DEFAULT_COUNT) final int count,
@@ -84,14 +91,16 @@ public interface PendingNotificationsResource {
      * @param response  Response format {@link ValuesDTO}.
      */
     @GET
-    @Path("/notifications/{" + PARAM_DEVICE_ID + "}/{" + PARAM_SERVICE_ID + '}')
+    @Path('{' + PARAM_DEVICE_ID + "}/{" + PARAM_SERVICE_ID + '}')
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     void getPendingNotificationsForDeviceAndService(
             @Nonnull @PathParam(PARAM_DEVICE_ID) String deviceId,
             @Nonnull @PathParam(PARAM_SERVICE_ID) String serviceId,
             @Suspended @Nonnull AsyncResponse response);
 
     @GET
-    @Path("/notifications/{" + PARAM_DEVICE_ID + '}')
+    @Path('{' + PARAM_DEVICE_ID + '}')
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     void getPendingNotificationsForDevice(
             @Nonnull @PathParam(PARAM_DEVICE_ID) String deviceId,
             @Suspended @Nonnull AsyncResponse response);
@@ -110,14 +119,16 @@ public interface PendingNotificationsResource {
      * @param response  Empty response.
      */
     @POST
-    @Path("/notifications/{" + PARAM_DEVICE_ID + "}/{" + PARAM_SERVICE_ID + '}')
+    @Path('{' + PARAM_DEVICE_ID + "}/{" + PARAM_SERVICE_ID + '}')
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     void createPendingNotificationForDeviceAndService(
             @Nonnull @PathParam(PARAM_DEVICE_ID) String deviceId,
             @Nullable @PathParam(PARAM_SERVICE_ID) String serviceId,
             @Suspended @Nonnull AsyncResponse response);
 
     @POST
-    @Path("/notifications/{" + PARAM_DEVICE_ID + '}')
+    @Path('{' + PARAM_DEVICE_ID + '}')
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     void createPendingNotificationForDevice(
             @Nonnull @PathParam(PARAM_DEVICE_ID) String deviceId,
             @Suspended @Nonnull AsyncResponse response);
@@ -137,14 +148,16 @@ public interface PendingNotificationsResource {
      * @param response  Empty response.
      */
     @DELETE
-    @Path("/notifications/{" + PARAM_DEVICE_ID + "}/{" + PARAM_SERVICE_ID + '}')
+    @Path('{' + PARAM_DEVICE_ID + "}/{" + PARAM_SERVICE_ID + '}')
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     void deletePendingNotificationsForDeviceAndService(
             @Nonnull @PathParam(PARAM_DEVICE_ID) String deviceId,
             @Nonnull @PathParam(PARAM_SERVICE_ID) String serviceId,
             @Suspended @Nonnull AsyncResponse response);
 
     @DELETE
-    @Path("/notifications/{" + PARAM_DEVICE_ID + '}')
+    @Path('{' + PARAM_DEVICE_ID + '}')
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     void deletePendingNotificationsForDevice(
             @Nonnull @PathParam(PARAM_DEVICE_ID) String deviceId,
             @Suspended @Nonnull AsyncResponse response);

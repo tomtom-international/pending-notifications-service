@@ -38,22 +38,22 @@ HTTPS calls.
 
 Externally available, unsecured HTTP calls:
 
-    GET    /pending/notifications/{deviceId}             -- get notification(s) for a specific ID (returns 200 or 404)
+    GET    /notifications/{deviceId}             -- get notification(s) for a specific ID (returns 200 or 404)
                                                             this returns a list of services with pending notifications
 Internally available, possibly secured HTTPS calls:
 
-    POST   /pending/notifications/{deviceId}             -- create pending notifications, for a specific device
-    POST   /pending/notifications/{deviceId}/{serviceId} -- ibid, for a specific service
-    DELETE /pending/notifications/{deviceId}             -- delete all notifications for a specific device
-    DELETE /pending/notifications/{deviceId}/{serviceId} -- ibid, but only for 1 service at a time
+    POST   /notifications/{deviceId}             -- create pending notifications, for a specific device
+    POST   /notifications/{deviceId}/{serviceId} -- ibid, for a specific service
+    DELETE /notifications/{deviceId}             -- delete all notifications for a specific device
+    DELETE /notifications/{deviceId}/{serviceId} -- ibid, but only for 1 service at a time
 
-    GET    /pending/notifications[?offset={x}&count={y}] -- get all IDs that have pending notifications
+    GET    /notifications[?offset={x}&count={y}] -- get all IDs that have pending notifications
 
 And then there are some helper methods, for development and monitoring:
 
-    GET    /pending                               -- produces this help text
-    GET    /pending/version                       -- returns the service version
-    GET    /pending/status                        -- returns 204 if all OK
+    GET    /        -- produces this help text
+    GET    /version -- returns the service version
+    GET    /status  -- returns 204 if all OK
 
 The distinction between HTTP and HTTPS calls should be provided during deployment as a configuration of the
 router/firewall in front of the application server. It is not part of this source code.
@@ -67,7 +67,7 @@ description of the calls.
 The service is extremely simple. It allows a device to check if there is something at the server worthwhile
 contacting the server for. The service only tells the device "yes, there is something for you" or
 "no, don't bother checking". This is achieved by providing an unauthenticated HTTP (not HTTPS!)
-REST API `GET /pending/notifications/{id}`, which returns either HTTP status code `200 OK` or
+REST API `GET /notifications/{id}`, which returns either HTTP status code `200 OK` or
 `404 NOT FOUND`. The provided `{id}` is the ID of the device which you wish to check the pending notifications for.
 
 Status code `200 OK` indicates there is indeed something on the server waiting for the device
@@ -90,18 +90,18 @@ not part of the pending notifications service.) The system will then remove its 
 
 The only API calls used in this scenario, are:
 
-    GET     /pending/notifications/{deviceId}                (called by device D)
+    GET     /notifications/{deviceId}                (called by device D)
 
-    POST    /pending/notifications/{deviceId}/{serviceId}    (called by system S)
-    DELETE  /pending/notifications/{deviceId}/{serviceId}    (called by system S)
+    POST    /notifications/{deviceId}/{serviceId}    (called by system S)
+    DELETE  /notifications/{deviceId}/{serviceId}    (called by system S)
 
 1. System `S` wants to notify device `D` it needs to contact `S` in a secure way for more info. It calls:
 
-        POST /pending/notifications/D
+        POST /notifications/D
 
 2. Device `D` want to check if there’s a pending notification. It calls:
 
-        GET /pending/notifications/D
+        GET /notifications/D
 
     The returned status code will be 200 (message body can be ignored).
 
@@ -110,9 +110,9 @@ back to sleep and retry later.
 
 4. When device `D` contacts system `S` for more info, `S` removes the notification for `D` by calling:
 
-        DELETE /pending/notifications/D
+        DELETE /notifications/D
 
-    This ensures subsequent calls to `GET /pending/notifications/D` will return 404.
+    This ensures subsequent calls to `GET /notifications/D` will return 404.
 
 
 ### Sequence Diagram for Scenario 1
@@ -124,7 +124,7 @@ back to sleep and retry later.
     Scenario: Nothing is waiting for D          :
     =========                                   :
         |                                       |
-        | HTTP GET /pending/notifications/D              |   (Note the use of HTTP)
+        | HTTP GET /notifications/D             |   (Note the use of HTTP)
         |-------------------------------------->|-+
         |                         404 NOT FOUND | |
         |<--------------------------------------|-+
@@ -133,7 +133,7 @@ back to sleep and retry later.
     Scenario: Something is waiting for D        :
     =========                                   :
         |                                       |
-        | HTTP GET /pending/notifications/D              |   (Note the use of HTTP)
+        | HTTP GET /notifications/D             |   (Note the use of HTTP)
         |-------------------------------------->|-+
         |                                200 OK |
         |<--------------------------------------|-+
@@ -153,23 +153,23 @@ remove its pending notification for the device.
 
 The API calls used in this scenario, are:
 
-    GET     /pending/notifications/{deviceId}                (called by device D)
+    GET     /notifications/{deviceId}                (called by device D)
 
-    POST    /pending/notifications/{deviceId}/{serviceId}    (called by system S and T)
-    DELETE  /pending/notifications/{deviceId}/{serviceId}    (called by system S and T)
-    DELETE  /pending/notifications/{deviceId}                (not strictly needed, but may be used to reset all calls for D)
+    POST    /notifications/{deviceId}/{serviceId}    (called by system S and T)
+    DELETE  /notifications/{deviceId}/{serviceId}    (called by system S and T)
+    DELETE  /notifications/{deviceId}                (not strictly needed, but may be used to reset all calls for D)
 
 1. System `S` wants to notify device `D` it needs to contact `S` in a secure way for more info. It calls:
 
-        POST /pending/notifications/D/S      (note the append "/S", as compared to scenario 1)
+        POST /notifications/D/S      (note the append "/S", as compared to scenario 1)
 
 2. System `T` also wants to notify device `D`. It calls:
 
-        POST /pending/notifications/D/T
+        POST /notifications/D/T
 
 3. Device `D` want to check if there’s a pending notification. It calls:
 
-        GET /pending/notifications/D
+        GET /notifications/D
 
     The returned status code will be 200 and the body contains: `["S", "T"]`
 
@@ -178,40 +178,40 @@ would have gone back to sleep and retry later.
 
 4. When device `D` contacts `S` for more info, `S` removes the notification by calling:
 
-        DELETE /pending/notifications/D/S
+        DELETE /notifications/D/S
 
     The same applies for `T`, which also removes its notification by calling:
 
-        DELETE /pending/notifications/D/T
+        DELETE /notifications/D/T
 
-    At this point, there are no waiting notifications anymore, so subsequent calls to `GET /pending/notifications/D` will
+    At this point, there are no waiting notifications anymore, so subsequent calls to `GET /notifications/D` will
     return 404.
 
 5. Should a system wish to 'reset' all pending notifications for a device, then a single `DELETE` call suffices:
 
-            DELETE /pending/notifications/D/T
+            DELETE /notifications/D/T
 
     This removes all notifications for all services for device `D`.
 
 
 ### General Remark and Word of Caution
 
-In the above scneario, the final call to `DELETE /pending/notifications/D/T` effectively removed the last pending
-notification for device `D`, causing `GET /pending/notifications/D` to return 404 subsequently.
+In the above scneario, the final call to `DELETE /notifications/D/T` effectively removed the last pending
+notification for device `D`, causing `GET /notifications/D` to return 404 subsequently.
 
-However, it would be possible that, although not advised, another back-end system had called `POST /pending/notifications/D` previously,
+However, it would be possible that, although not advised, another back-end system had called `POST /notifications/D` previously,
 *without* specifying a service identification (effectively using an API call you would use in scenarion 1 only).
 
 In that case, the "serviceless" notification would still be pending, preventing the service from returning 404. Furthermore,
-that notification can only be deleted with `DELETE /pending/notifications/D` (as seen in scenario 1). Such a `DELETE` call
+that notification can only be deleted with `DELETE /notifications/D` (as seen in scenario 1). Such a `DELETE` call
 always deletes *all* pending notifications for a device.
 
-Mixing the use of scenario 1 type `POST /pending/notifications/{deviceId}` and scenario 2 type
-`POST /pending/notifications/{deviceId}/{deviceId}` pending notifications is not advised.
+Mixing the use of scenario 1 type `POST /notifications/{deviceId}` and scenario 2 type
+`POST /notifications/{deviceId}/{deviceId}` pending notifications is not advised.
 
 If you are going to use the service and you are unsure whether additional systems will make use of this service, it may be
 best to assume scenario 2, and simply always provide a service ID for your service (and use
-`POST|DELETE /pending/notifications/{deviceId}/{serviceId}`).
+`POST|DELETE /notifications/{deviceId}/{serviceId}`).
 
 
 ## Minimize Data Usage
@@ -328,14 +328,14 @@ Or use a tool like cURL:
 
 To create a pending notification for a specific ID:
 
-    curl -s -X POST http://localhost:8080/pending/notifications/123
+    curl -s -X POST http://localhost:8080/notifications/123
 
 And to retrieve and delete notifications for an ID:
 
-    curl -s -X GET    http://localhost:8080/pending/notifications/123
-    curl -s -X DELETE http://localhost:8080/pending/notifications/123
+    curl -s -X GET    http://localhost:8080/notifications/123
+    curl -s -X DELETE http://localhost:8080/notifications/123
 
-    curl -s -X GET http://localhost:8080/pending/notifications
+    curl -s -X GET http://localhost:8080/notifications
 
 This should produce a list of IDs that have a pending notification.
 If there are none, this should produce something like: `{"total":0}`

@@ -18,6 +18,7 @@ package com.tomtom.services.notifications.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.tomtom.speedtools.apivalidation.ApiDTO;
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -26,6 +27,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.util.List;
 
 /**
@@ -39,12 +44,18 @@ import java.util.List;
  */
 @SuppressWarnings({"EqualsWhichDoesntCheckParameterClass", "NullableProblems"})
 @JsonInclude(Include.NON_EMPTY)
+@XmlRootElement(name = "notifications")
+@XmlAccessorType(XmlAccessType.FIELD)
 public final class AllPendingNotificationsDTO extends ApiDTO {
 
+    @JsonProperty("total")
+    @XmlElement(name = "total")
     @Nonnull
     public Integer total;    // Mandatory field.
 
+    @JsonProperty("ids")
     @JsonUnwrapped
+    @XmlElement(name = "ids")
     @Nullable
     public ValuesDTO ids;    // Optional field.
 

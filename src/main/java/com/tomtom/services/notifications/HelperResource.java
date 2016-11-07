@@ -29,7 +29,7 @@ import javax.ws.rs.core.MediaType;
  * ("human readable service discovery"), the service version and a service status call, to be used for
  * service monitoring.
  */
-@Path("/pending")
+@Path("/")
 public interface HelperResource {
 
     /**
@@ -51,7 +51,7 @@ public interface HelperResource {
      * @param response Version, {@link com.tomtom.services.notifications.dto.VersionDTO}.
      */
     @GET
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     @Path("version")
     void getVersion(@Suspended @Nonnull AsyncResponse response);
 
@@ -62,5 +62,6 @@ public interface HelperResource {
      */
     @GET
     @Path("status")
+    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
     void getStatus(@Suspended @Nonnull AsyncResponse response);
 }

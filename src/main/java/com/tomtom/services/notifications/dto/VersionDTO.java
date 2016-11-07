@@ -18,6 +18,7 @@ package com.tomtom.services.notifications.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tomtom.services.notifications.ApiConstants;
 import com.tomtom.speedtools.apivalidation.ApiDTO;
 import com.tomtom.speedtools.utils.StringUtils;
@@ -27,6 +28,10 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * This class defines the data transfer object for the "/pending/version" method.
@@ -34,11 +39,15 @@ import javax.annotation.Nullable;
  */
 @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
 @JsonInclude(Include.NON_EMPTY)
+@XmlRootElement(name = "version")
+@XmlAccessorType(XmlAccessType.FIELD)
 public final class VersionDTO extends ApiDTO {
 
     /**
      * Version string of service. No assumptions can be made on its format.
      */
+    @JsonProperty("version")
+    @XmlElement(name = "version")
     @Nullable
     private String version;
 
