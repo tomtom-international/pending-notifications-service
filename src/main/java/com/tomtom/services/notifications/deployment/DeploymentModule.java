@@ -17,12 +17,15 @@
 package com.tomtom.services.notifications.deployment;
 
 import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.inject.Binder;
-import com.tomtom.services.notifications.PendingNotificationsResource;
 import com.tomtom.services.notifications.HelperResource;
-import com.tomtom.services.notifications.implementation.PendingNotificationsResourceImpl;
+import com.tomtom.services.notifications.PendingNotificationsResource;
 import com.tomtom.services.notifications.implementation.HelperResourceImpl;
+import com.tomtom.services.notifications.implementation.PendingNotificationsResourceImpl;
 import com.tomtom.speedtools.guice.GuiceConfigurationModule;
+import com.tomtom.speedtools.json.Json;
 import com.tomtom.speedtools.rest.GeneralExceptionMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -75,6 +78,10 @@ public class DeploymentModule extends GuiceConfigurationModule {
         binder.bind(PendingNotificationsResource.class).to(PendingNotificationsResourceImpl.class).in(Singleton.class);
 
         // Bind start-up checking class (example).
-        binder.bind(com.tomtom.services.notifications.deployment.StartupCheck.class).asEagerSingleton();
+        binder.bind(StartupCheck.class).asEagerSingleton();
+
+        final ObjectMapper jsonMapper = Json.getCurrentJsonObjectMapper();
+        jsonMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+        jsonMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
 }
