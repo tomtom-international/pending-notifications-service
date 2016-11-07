@@ -58,7 +58,8 @@ public class DeploymentModule extends GuiceConfigurationModule {
      * properties outside of your WAR.
      */
     public DeploymentModule() {
-        super("classpath:notifications.properties", "classpath:notifications-secret.properties");
+        super("classpath:pending-notifications-service.properties",
+                "classpath:pending-notifications-service-secret.properties");
     }
 
     @Override

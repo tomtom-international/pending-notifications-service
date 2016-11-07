@@ -34,8 +34,8 @@
             com.tomtom.speedtools.rest.ServicesModule,
             <!-- Include the REST API and bootstrap module for deployment. -->
 
-            com.tomtom.services.notification.dao.DaoModule,
-            com.tomtom.services.notification.deployment.DeploymentModule
+            com.tomtom.services.notifications.dao.DaoModule,
+            com.tomtom.services.notifications.deployment.DeploymentModule
         </param-value>
     </context-param>
 

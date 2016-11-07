@@ -1,8 +1,7 @@
 # -----------------------------------------------------------------------------
 # Ignore property and configuration files in main resource directory!
 # -----------------------------------------------------------------------------
-src/main/resources/notification-service.properties
-src/main/resources/notification-service-secret.properties
+src/main/resources/pending-notifications-service-secret.properties
 src/main/resources/log4j.xml
 
 # -----------------------------------------------------------------------------
