@@ -18,6 +18,8 @@ package com.tomtom.services.notifications.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.tomtom.speedtools.apivalidation.ApiDTO;
 import com.tomtom.speedtools.objects.Immutables;
@@ -43,6 +45,8 @@ import java.util.List;
 @JsonInclude(Include.NON_EMPTY)
 public final class ValuesDTO extends ApiDTO {
 
+    @JsonProperty("values")
+    @JsonUnwrapped
     @Nonnull
     public List<String> values; // Mandatory field.
 

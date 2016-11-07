@@ -13,11 +13,11 @@ So, the deployment/context-specific properties should not be included in the WAR
 This is why the `.gitignore` file should specifically list these property files to be
 excluded from this directory, to avoid them ending up in a WAR file.
 
-In this case, the file `notification-service.properties` should be in
+In this case, the file `pending-notifications-service.properties` should be in
 `.gitignore` and the file should not be present in the source tree in Git.  
 
 For testing and development purposes it may be convenient, however, to include the
-properties file from `src/test/resources/notification-service.properties` here as well.
+properties file from `src/test/resources/pending-notifications-service.properties` here as well.
 
 You can safely copy them to this directory for testing, as Git will ignore these 
 files next to time to wish to add or commit something to the source repository.
