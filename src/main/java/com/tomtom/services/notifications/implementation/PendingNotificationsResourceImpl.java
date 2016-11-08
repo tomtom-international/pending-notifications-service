@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -19,7 +19,10 @@ package com.tomtom.services.notifications.implementation;
 
 import akka.dispatch.Futures;
 import com.tomtom.services.notifications.PendingNotificationsResource;
+import com.tomtom.services.notifications.dao.DatabaseProperties;
 import com.tomtom.services.notifications.dao.NotificationDao;
+import com.tomtom.services.notifications.dao.memory.NotificationDaoMemoryImpl;
+import com.tomtom.services.notifications.dao.mongodb.NotificationDaoMongoDBImpl;
 import com.tomtom.services.notifications.dto.AllPendingNotificationsDTO;
 import com.tomtom.services.notifications.dto.ValuesDTO;
 import com.tomtom.speedtools.apivalidation.exceptions.ApiIntegerOutOfRangeException;
@@ -62,12 +65,18 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
     @Inject
     public PendingNotificationsResourceImpl(
             @Nonnull final ResourceProcessor processor,
-            @Nonnull final NotificationDao notificationDao) {
+            @Nonnull final DatabaseProperties databaseProperties,
+            @Nonnull final NotificationDaoMemoryImpl notificationDaoMemory,
+            @Nonnull final NotificationDaoMongoDBImpl notificationDaoMongoDB) {
         assert processor != null;
 
         // Remember the injected processor.
         this.processor = processor;
-        this.notificationDao = notificationDao;
+        if (databaseProperties.getUseInMemory()) {
+            this.notificationDao = notificationDaoMemory;
+        } else {
+            this.notificationDao = notificationDaoMongoDB;
+        }
     }
 
     @Override

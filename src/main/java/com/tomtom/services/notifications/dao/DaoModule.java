@@ -5,7 +5,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *    http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -24,7 +24,6 @@ import com.mongodb.Mongo;
 import com.mongodb.ServerAddress;
 import com.tomtom.services.notifications.dao.mappers.NotificationsMapperRegistry;
 import com.tomtom.services.notifications.dao.memory.NotificationDaoMemoryImpl;
-import com.tomtom.services.notifications.dao.mongodb.MongoDBProperties;
 import com.tomtom.services.notifications.dao.mongodb.NotificationDaoMongoDBImpl;
 import com.tomtom.speedtools.mongodb.MongoConnectionCache;
 import com.tomtom.speedtools.mongodb.MongoDB;
@@ -34,6 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.net.UnknownHostException;
 
 /**
@@ -42,7 +42,6 @@ import java.net.UnknownHostException;
 public class DaoModule implements Module {
     private static final Logger LOG = LoggerFactory.getLogger(DaoModule.class);
 
-    private static final boolean USE_MONGODB = true;
     private static final int MONGODB_TIMEOUT_SECS = 30;
 
     @Override
@@ -50,20 +49,23 @@ public class DaoModule implements Module {
         assert binder != null;
 
         // Bind singletons.
-        binder.bind(MongoDBProperties.class).in(Singleton.class);
+        binder.bind(DatabaseProperties.class).in(Singleton.class);
         binder.bind(MapperRegistry.class).to(NotificationsMapperRegistry.class).in(Singleton.class);
-        if (USE_MONGODB) {
-            binder.bind(NotificationDao.class).to(NotificationDaoMongoDBImpl.class).in(Singleton.class);
-        } else {
-            binder.bind(NotificationDao.class).to(NotificationDaoMemoryImpl.class).in(Singleton.class);
-        }
+        binder.bind(NotificationDaoMemoryImpl.class).in(Singleton.class);
+        binder.bind(NotificationDaoMongoDBImpl.class).in(Singleton.class);
     }
 
-    @Nonnull
+    @Nullable
     @Provides
     @Singleton
-    public MongoDB provideMongoDB(@Nonnull final MongoDBProperties properties) {
+    public MongoDB provideMongoDB(@Nonnull final DatabaseProperties properties) {
         assert properties != null;
+
+        // Bail out if only in-memory.
+        if (properties.getUseInMemory()) {
+            LOG.info("provideMongoDB: Using in-memory database");
+            return null;
+        }
 
         try {
             LOG.info("provideMongoDB: Creating MongoDB connection: {}", properties.getServers());
@@ -98,7 +100,8 @@ public class DaoModule implements Module {
      */
     @Nonnull
     protected MongoDB getDB(@Nonnull final Mongo mongo, @Nonnull final String databaseName,
-                            @Nonnull final String subDatabaseName, @Nonnull final String userName, @Nonnull final String password) {
+                            @Nonnull final String subDatabaseName,
+                            @Nonnull final String userName, @Nonnull final String password) {
         assert mongo != null;
         assert databaseName != null;
         assert subDatabaseName != null;

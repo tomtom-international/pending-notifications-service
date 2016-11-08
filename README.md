@@ -16,36 +16,40 @@ if a push channel is not available.
 
 The service offers connected devices a way to figure out, in a very data usage friendly manner, whether it needs to
 contact a back-end service in a secure way. Contrary to common push notification solutions, the pending notifications in this service do not
-contain any useful information themselves, other than redirecting the device to contact a specific service.
+do not contain any information themselves, other than redirecting the device to contact a specific service to get the actual
+information.
 
 Contacting the actual service to retrieve the information is not part of the pending notifications service itself.
-In general, this is a secured call to retrieve pending messages, fetch new firmware, get a new software
-configuration, or anything else.
+In general, this is a secured call. This could be a notification to securely retrieve pending messages, 
+fetch new firmware, get a new software configuration, or anything else.
 
-The notification service is, like most push notification services, a very generic service. It tries to
+The notification service is (like most push notification services) a very generic service. It tries to
 accommodate a wide range of use case, two of which are considered very common:
 
  1. A *single* back-end service wishes to notify devices to contact them in a secure way to retrieve more
- information.
+ information. This means there either is or there isn't a pending notification for the device.
 
- 2. *Multiple* back-end services, independently of each other, wish to notify devices.
+ 2. *Multiple* back-end services, independently of each other, wish to notify devices. This means pending notifications
+ are stored per service for the device and the device may either query whether there are any, or any specific
+ pending notifications.
 
 
 ## The Pending Notifications API
 
-The full set of API methods offered by the Notification Service is split into unsecured HTTP calls and secured
-HTTPS calls.
+The full set of API methods offered by the Notification Service is split into (usually unsecured) HTTP calls 
+and secured HTTPS calls.
 
-Externally available, unsecured HTTP calls:
+Externally available, usually unsecured HTTP calls:
 
     GET    /notifications/{deviceId}             -- get notification(s) for a specific ID (returns 200 or 404)
-                                                            this returns a list of services with pending notifications
-Internally available, possibly secured HTTPS calls:
+                                                    this returns a list of services with pending notifications
+
+Internally available, secured HTTPS calls:
 
     POST   /notifications/{deviceId}             -- create pending notifications, for a specific device
-    POST   /notifications/{deviceId}/{serviceId} -- ibid, for a specific service
+    POST   /notifications/{deviceId}/{serviceId} -- ibid, but for a specific service for that device
     DELETE /notifications/{deviceId}             -- delete all notifications for a specific device
-    DELETE /notifications/{deviceId}/{serviceId} -- ibid, but only for 1 service at a time
+    DELETE /notifications/{deviceId}/{serviceId} -- ibid, but only for 1 service for the device at a time
 
     GET    /notifications[?offset={x}&count={y}] -- get all IDs that have pending notifications
 
@@ -66,20 +70,24 @@ description of the calls.
 
 The service is extremely simple. It allows a device to check if there is something at the server worthwhile
 contacting the server for. The service only tells the device "yes, there is something for you" or
-"no, don't bother checking". This is achieved by providing an unauthenticated HTTP (not HTTPS!)
-REST API `GET /notifications/{id}`, which returns either HTTP status code `200 OK` or
-`404 NOT FOUND`. The provided `{id}` is the ID of the device which you wish to check the pending notifications for.
+"no, don't bother checking". 
+
+This is achieved by providing an unauthenticated HTTP (not HTTPS!) REST API `GET /notifications/{id}`. 
+The provided `{id}` is the ID of the device which you wish to check the pending notifications for.
+the service returns either HTTP status code `200 OK` or `404 NOT FOUND`.
 
 Status code `200 OK` indicates there is indeed something on the server waiting for the device
-to be picked up. The device should in that case contact the server via its regular, authenticated and
-authorized (possibly HTTPS, TLS or otherwise secured) channel.
+to be picked up. The device should in that case take action and for example contact another server 
+via its regular, authenticated and authorized (possibly HTTPS, TLS or otherwise secured) channel, to
+get the actual notification.
 
 Status code `404 NOT FOUND` indicates there is nothing for the device on the server of interest.
 The device can then go back to sleep and return to the server after its predetermined interval.
 
-The service does not provide ANY other information than this. In particular, in should not be extended
-with features like providing a new sleep interval or such, as the interface is not secure and the
-device is not allowed to trust anything from this interface.
+The notifications service does not provide **any** other information than this. In particular, in should 
+not be extended with features like providing a new sleep interval or such, as the interface is not secure and the
+device is not allowed to trust anything from this interface. (If you want to update sleep intervals, notify
+the device once to get a secure update somewhere, which includes the new sleep interval).
 
 
 ## Scenario 1: A Single Back-End System Provides Notifications for Devices
@@ -121,7 +129,7 @@ back to sleep and retry later.
     ----+---                              ------+--------
         |                                       |
         :                                       :
-    Scenario: Nothing is waiting for D          :
+    Scenario: Nothing is waiting for device D   :
     =========                                   :
         |                                       |
         | HTTP GET /notifications/D             |   (Note the use of HTTP)
@@ -130,7 +138,7 @@ back to sleep and retry later.
         |<--------------------------------------|-+
         | (device goes back to sleep)           |
         :                                       :
-    Scenario: Something is waiting for D        :
+    Scenario: Something is waiting for device D :
     =========                                   :
         |                                       |
         | HTTP GET /notifications/D             |   (Note the use of HTTP)
@@ -271,15 +279,16 @@ that were generated for the devices).
 
 ## Customizing the Properties File `notification-secret.properties`
 
-The system requires a properties file called `notification-secret.properties` on the class path.
+The system requires a properties file called `notifications-service-secret.properties` on the class path.
 This file should contain the following lines:
 
-    MongoDB.servers = localhost:27017
-    MongoDB.database = pending
-    MongoDB.password = admin
-    MongoDB.userName = admin
+    Database.useInMemory=false
+    Database.servers=localhost:27017
+    Database.database=pending
+    Database.password=admin
+    Database.userName=admin
 
-If the file is `notification-secret.properties` and placed in `src/main/resources`, Maven
+If the file is `notifications-service-secret.properties` and placed in `src/main/resources`, Maven
 will include it in the WAR file which can be deployed on a server.
 
 The file should normally not be included in this source repository, because it will always need
@@ -290,7 +299,7 @@ to be provided for a specific deployment.
 
 The service can be run with an in-memory hash-map implementation or can be backed by a MongoDB
 database. If you wish to use the MongoDB implementation, then you should specify the hostname,
-port and username/password in the properties file `notifications-secret.properties` (see above).
+port and username/password in the properties file `notifications-service-secret.properties` (see above).
 
 The MongoDB database can be initialized with these commands from the `mongo` shell:
 
