@@ -58,10 +58,9 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
      * of the processor is defined in the "DeploymentModule" elsewhere in the project. It is a
      * singleton.
      *
-     * @param processor              The (Akka-backed) resource processor.
-     * @param databaseProperties     Data base properties.
-     * @param notificationDaoMemory  In-memory DAO version.
-     * @param notificationDaoMongoDB MongoDB DAO version.
+     * @param processor          The (Akka-backed) resource processor.
+     * @param databaseProperties Data base properties.
+     * @param notificationDao    the DAO.
      */
     @Inject
     public PendingNotificationsResourceImpl(
