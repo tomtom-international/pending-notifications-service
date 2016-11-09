@@ -70,7 +70,7 @@
     </scm>
 
     <properties>
-        <coveralls-maven-plugin.repoToken>x</coveralls-maven-plugin.repoToken>
+        <coveralls-maven-plugin.repoToken>gCLbecdweXgjVcoGWO0M9nvSYeg1qIY2F</coveralls-maven-plugin.repoToken>
 
         <!-- Java and build properties. -->
         <jdk.version>1.8</jdk.version>
