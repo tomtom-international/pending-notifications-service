@@ -23,8 +23,6 @@ import com.google.inject.Singleton;
 import com.mongodb.Mongo;
 import com.mongodb.ServerAddress;
 import com.tomtom.services.notifications.dao.mappers.NotificationsMapperRegistry;
-import com.tomtom.services.notifications.dao.memory.NotificationDaoMemoryImpl;
-import com.tomtom.services.notifications.dao.mongodb.NotificationDaoMongoDBImpl;
 import com.tomtom.speedtools.mongodb.MongoConnectionCache;
 import com.tomtom.speedtools.mongodb.MongoDB;
 import com.tomtom.speedtools.mongodb.MongoDBConnectionException;
@@ -33,7 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.net.UnknownHostException;
 
 /**
@@ -51,21 +48,14 @@ public class DaoModule implements Module {
         // Bind singletons.
         binder.bind(DatabaseProperties.class).in(Singleton.class);
         binder.bind(MapperRegistry.class).to(NotificationsMapperRegistry.class).in(Singleton.class);
-        binder.bind(NotificationDaoMemoryImpl.class).in(Singleton.class);
-        binder.bind(NotificationDaoMongoDBImpl.class).in(Singleton.class);
+        binder.bind(NotificationDao.class).to(NotificationDaoImpl.class).in(Singleton.class);
     }
 
-    @Nullable
+    @Nonnull
     @Provides
     @Singleton
-    public MongoDB provideMongoDB(@Nonnull final DatabaseProperties properties) {
+    public static MongoDB provideMongoDB(@Nonnull final DatabaseProperties properties) {
         assert properties != null;
-
-        // Bail out if only in-memory.
-        if (properties.getUseInMemory()) {
-            LOG.info("provideMongoDB: Using in-memory database");
-            return null;
-        }
 
         try {
             LOG.info("provideMongoDB: Creating MongoDB connection: {}", properties.getServers());
@@ -99,9 +89,9 @@ public class DaoModule implements Module {
      * @throws MongoDBConnectionException If something went wrong.
      */
     @Nonnull
-    protected MongoDB getDB(@Nonnull final Mongo mongo, @Nonnull final String databaseName,
-                            @Nonnull final String subDatabaseName,
-                            @Nonnull final String userName, @Nonnull final String password) {
+    protected static MongoDB getDB(@Nonnull final Mongo mongo, @Nonnull final String databaseName,
+                                   @Nonnull final String subDatabaseName,
+                                   @Nonnull final String userName, @Nonnull final String password) {
         assert mongo != null;
         assert databaseName != null;
         assert subDatabaseName != null;

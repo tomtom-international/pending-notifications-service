@@ -41,7 +41,7 @@ public final class DatabaseProperties implements HasProperties {
      * MongoDB properties.
      *
      * @param useInMemory True if we should use the in-memory database, rather than an external database.
-     * @param servers     Host names and port numbers of MongoDB engine, formatted as "<hostname>:<port>[,<hostname>:<port>]*".
+     * @param servers     Host names and port numbers of MongoDB engine, formatted as "hostname:port[,hostname:port]*".
      *                    This can be DNS name or IP number. The port number must be in range: [1, 65535]. Cannot be
      *                    empty.
      * @param database    Database name. Cannot be empty.

@@ -21,8 +21,6 @@ import akka.dispatch.Futures;
 import com.tomtom.services.notifications.PendingNotificationsResource;
 import com.tomtom.services.notifications.dao.DatabaseProperties;
 import com.tomtom.services.notifications.dao.NotificationDao;
-import com.tomtom.services.notifications.dao.memory.NotificationDaoMemoryImpl;
-import com.tomtom.services.notifications.dao.mongodb.NotificationDaoMongoDBImpl;
 import com.tomtom.services.notifications.dto.AllPendingNotificationsDTO;
 import com.tomtom.services.notifications.dto.ValuesDTO;
 import com.tomtom.speedtools.apivalidation.exceptions.ApiIntegerOutOfRangeException;
@@ -60,23 +58,21 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
      * of the processor is defined in the "DeploymentModule" elsewhere in the project. It is a
      * singleton.
      *
-     * @param processor The (Akka-backed) resource processor.
+     * @param processor              The (Akka-backed) resource processor.
+     * @param databaseProperties     Data base properties.
+     * @param notificationDaoMemory  In-memory DAO version.
+     * @param notificationDaoMongoDB MongoDB DAO version.
      */
     @Inject
     public PendingNotificationsResourceImpl(
             @Nonnull final ResourceProcessor processor,
             @Nonnull final DatabaseProperties databaseProperties,
-            @Nonnull final NotificationDaoMemoryImpl notificationDaoMemory,
-            @Nonnull final NotificationDaoMongoDBImpl notificationDaoMongoDB) {
+            @Nonnull final NotificationDao notificationDao) {
         assert processor != null;
 
         // Remember the injected processor.
         this.processor = processor;
-        if (databaseProperties.getUseInMemory()) {
-            this.notificationDao = notificationDaoMemory;
-        } else {
-            this.notificationDao = notificationDaoMongoDB;
-        }
+        this.notificationDao = notificationDao;
     }
 
     @Override

@@ -34,7 +34,7 @@ public interface NotificationDao {
     /**
      * Return the total number of device IDs.
      *
-     * @return Total number of device IDs, >= 0.
+     * @return Total number of device IDs, &gt;= 0.
      * @throws InternalDaoException Thrown if the data store throws an error.
      */
     public int getNrOfDeviceIds() throws InternalDaoException;
