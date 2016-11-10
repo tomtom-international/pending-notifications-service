@@ -3,7 +3,7 @@
 [![Build Status](https://img.shields.io/travis/tomtom-international/pending-notifications-service.svg?maxAge=3600)](https://travis-ci.org/tomtom-international/pending-notifications-service)
 [![Coverage Status](https://coveralls.io/repos/github/tomtom-international/pending-notifications-service/badge.svg?branch=master&maxAge=3600)](https://coveralls.io/github/tomtom-international/pending-notifications-service?branch=master)
 [![License](http://img.shields.io/badge/license-APACHE2-blue.svg)]()
-[![Release](https://img.shields.io/github/release/tomtom-international/notificationn-service.svg?maxAge=3600)](https://github.com/tomtom-international/pending-notifications-service/releases)
+[![Release](https://img.shields.io/github/release/tomtom-international/pending-notifications-service.svg?maxAge=3600)](https://github.com/tomtom-international/pending-notifications-service/releases)
 
 ## Introduction
 
