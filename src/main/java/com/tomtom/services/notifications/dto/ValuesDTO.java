@@ -23,9 +23,6 @@ import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.tomtom.speedtools.apivalidation.ApiDTO;
 import com.tomtom.speedtools.objects.Immutables;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -63,6 +60,7 @@ public final class ValuesDTO extends ApiDTO {
     }
 
     public ValuesDTO(@Nonnull final Collection<String> values) {
+        super();
         this.values = Immutables.listOf(values);
     }
 
@@ -76,26 +74,12 @@ public final class ValuesDTO extends ApiDTO {
     @JsonValue
     @Nullable
     public List<String> getValues() {
+        beforeGet();
         return values;
     }
 
     public void setValues(@Nonnull final Collection<String> values) {
+        beforeSet();
         this.values = Immutables.listOf(values);
-    }
-
-    @Override
-    @Nonnull
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    @Override
-    public boolean equals(@Nullable final Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj, false);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this, false);
     }
 }

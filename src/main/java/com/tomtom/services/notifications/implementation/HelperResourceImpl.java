@@ -39,7 +39,7 @@ public class HelperResourceImpl implements HelperResource {
     private final MavenProperties mavenProperties;
 
     /**
-     * The root resources gets the Maven POM property injected by Google Guice at startuo.
+     * The root resources gets the Maven POM property injected by Google Guice at startup.
      *
      * @param mavenProperties POM version.
      */

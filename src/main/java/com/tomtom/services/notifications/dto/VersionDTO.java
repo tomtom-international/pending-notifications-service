@@ -22,9 +22,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tomtom.services.notifications.ApiConstants;
 import com.tomtom.speedtools.apivalidation.ApiDTO;
 import com.tomtom.speedtools.utils.StringUtils;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -74,27 +71,14 @@ public final class VersionDTO extends ApiDTO {
 
     @Nonnull
     public String getVersion() {
-        assert version != null;
+        beforeGet();
+        //noinspection ConstantConditions
         return version;
     }
 
     public void setVersion(@Nonnull final String version) {
+        beforeSet();
         this.version = StringUtils.trim(version);
     }
 
-    @Override
-    @Nonnull
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    @Override
-    public boolean equals(@Nullable final Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj, false);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this, false);
-    }
 }

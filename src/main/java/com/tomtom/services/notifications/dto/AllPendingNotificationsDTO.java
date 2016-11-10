@@ -21,9 +21,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.tomtom.speedtools.apivalidation.ApiDTO;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -76,13 +73,14 @@ public final class AllPendingNotificationsDTO extends ApiDTO {
     public void validate() {
         validator().start();
         validator().checkInteger(true, "total", total, 0, Integer.MAX_VALUE);   // Mandatory.
-        validator().checkNotNullAndValidate(false, "values", ids);           // Optional.
+        validator().checkNotNullAndValidate(false, "values", ids);              // Optional.
         validator().done();
     }
 
     public AllPendingNotificationsDTO(
             final int total,
             @Nullable final List<String> ids) {
+        super();
         this.total = total;
         this.ids = (ids == null) ? null : new ValuesDTO(ids);
     }
@@ -96,35 +94,23 @@ public final class AllPendingNotificationsDTO extends ApiDTO {
 
     @Nonnull
     public Integer getTotal() {
+        beforeGet();
         return total;
     }
 
     @Nullable
     public ValuesDTO getIds() {
+        beforeGet();
         return ids;
     }
 
     public void setTotal(@Nonnull final Integer total) {
+        beforeSet();
         this.total = total;
     }
 
     public void setIds(@Nullable final List<String> ids) {
+        beforeSet();
         this.ids = (ids == null) ? null : new ValuesDTO(ids);
-    }
-
-    @Override
-    @Nonnull
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
-
-    @Override
-    public boolean equals(@Nullable final Object obj) {
-        return EqualsBuilder.reflectionEquals(this, obj, false);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this, false);
     }
 }

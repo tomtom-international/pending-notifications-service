@@ -45,7 +45,7 @@ public class ApiPendingNotificationsTest {
     }
 
     @Test
-    public void checkAllPendingNotiticationsEmpty() throws Exception {
+    public void checkAllPendingNotiticationsEmpty() {
         LOG.info("checkAllPendingNotiticationsEmpty");
         startServer();
         final Response response = new ResteasyClientBuilder().build().
@@ -58,10 +58,10 @@ public class ApiPendingNotificationsTest {
     }
 
     @Test
-    public void checkAllPendingNotiticationsAll1() throws Exception {
+    public void checkAllPendingNotiticationsAll1() {
         LOG.info("checkAllPendingNotiticationsAll1");
         startServer();
-        add("x", "");
+        create("x", "");
         Response response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications").
                 request().
@@ -70,7 +70,7 @@ public class ApiPendingNotificationsTest {
         assertEquals(200, response.getStatus());
         assertEquals("{\"total\":1,\"ids\":[\"x\"]}", response.readEntity(String.class));
 
-        add("y", "");
+        create("y", "");
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications").
                 request().
@@ -97,10 +97,10 @@ public class ApiPendingNotificationsTest {
     }
 
     @Test
-    public void checkAllPendingNotiticationsAll2() throws Exception {
+    public void checkAllPendingNotiticationsAll2() {
         LOG.info("checkAllPendingNotiticationsAll2");
         startServer();
-        add("x", "1");
+        create("x", "1");
         Response response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications").
                 request().
@@ -109,7 +109,7 @@ public class ApiPendingNotificationsTest {
         assertEquals(200, response.getStatus());
         assertEquals("{\"total\":1,\"ids\":[\"x\"]}", response.readEntity(String.class));
 
-        add("y", "2");
+        create("y", "2");
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications").
                 request().
@@ -127,6 +127,14 @@ public class ApiPendingNotificationsTest {
         assertEquals("{\"total\":2,\"ids\":[\"x\"]}", response.readEntity(String.class));
 
         response = new ResteasyClientBuilder().build().
+                target(server.getHost() + "/notifications?count=0").
+                request().
+                accept(APPLICATION_JSON_TYPE).get();
+        assertNotNull(response);
+        assertEquals(200, response.getStatus());
+        assertEquals("{\"total\":2,\"ids\":[]}", response.readEntity(String.class));
+
+        response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications?count=1&offset=-1").
                 request().
                 accept(APPLICATION_JSON_TYPE).get();
@@ -136,7 +144,7 @@ public class ApiPendingNotificationsTest {
     }
 
     @Test
-    public void checkAllPendingNotiticationsForDevice1() throws Exception {
+    public void checkAllPendingNotiticationsForDevice1() {
         LOG.info("checkAllPendingNotiticationsForDevice1");
         startServer();
         Response response = new ResteasyClientBuilder().build().
@@ -147,7 +155,7 @@ public class ApiPendingNotificationsTest {
         assertEquals(404, response.getStatus());
         assertEquals("", response.readEntity(String.class));
 
-        add("x", "");
+        create("x", "");
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications/x").
                 request().
@@ -156,7 +164,7 @@ public class ApiPendingNotificationsTest {
         assertEquals(200, response.getStatus());
         assertEquals("[]", response.readEntity(String.class));
 
-        add("y", "");
+        create("y", "");
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications/x").
                 request().
@@ -175,7 +183,7 @@ public class ApiPendingNotificationsTest {
     }
 
     @Test
-    public void checkAllPendingNotiticationsForDevice2() throws Exception {
+    public void checkAllPendingNotiticationsForDevice2() {
         LOG.info("checkAllPendingNotiticationsForDevice2");
         startServer();
         Response response = new ResteasyClientBuilder().build().
@@ -194,7 +202,7 @@ public class ApiPendingNotificationsTest {
         assertEquals(404, response.getStatus());
         assertEquals("", response.readEntity(String.class));
 
-        add("x", "1");
+        create("x", "1");
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications/x").
                 request().
@@ -211,7 +219,7 @@ public class ApiPendingNotificationsTest {
         assertEquals(200, response.getStatus());
         assertEquals("", response.readEntity(String.class));
 
-        add("y", "2");
+        create("y", "2");
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications/x").
                 request().
@@ -228,7 +236,24 @@ public class ApiPendingNotificationsTest {
         assertEquals(200, response.getStatus());
         assertEquals("[\"2\"]", response.readEntity(String.class));
 
-        add("y", "3");
+        delete("x", "");
+        response = new ResteasyClientBuilder().build().
+                target(server.getHost() + "/notifications/x").
+                request().
+                accept(APPLICATION_JSON_TYPE).get();
+        assertNotNull(response);
+        assertEquals(404, response.getStatus());
+        assertEquals("", response.readEntity(String.class));
+
+        response = new ResteasyClientBuilder().build().
+                target(server.getHost() + "/notifications").
+                request().
+                accept(APPLICATION_JSON_TYPE).get();
+        assertNotNull(response);
+        assertEquals(200, response.getStatus());
+        assertEquals("{\"total\":1,\"ids\":[\"y\"]}", response.readEntity(String.class));
+
+        create("y", "3");
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications/y").
                 request().
@@ -237,7 +262,7 @@ public class ApiPendingNotificationsTest {
         assertEquals(200, response.getStatus());
         assertEquals("[\"2\",\"3\"]", response.readEntity(String.class));
 
-        remove("y", "4");
+        delete("y", "4");
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications/y").
                 request().
@@ -246,7 +271,7 @@ public class ApiPendingNotificationsTest {
         assertEquals(200, response.getStatus());
         assertEquals("[\"2\",\"3\"]", response.readEntity(String.class));
 
-        remove("y", "3");
+        delete("y", "3");
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications/y").
                 request().
@@ -255,7 +280,7 @@ public class ApiPendingNotificationsTest {
         assertEquals(200, response.getStatus());
         assertEquals("[\"2\"]", response.readEntity(String.class));
 
-        remove("y", "2");
+        delete("y", "2");
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications/y").
                 request().
@@ -263,9 +288,41 @@ public class ApiPendingNotificationsTest {
         assertNotNull(response);
         assertEquals(404, response.getStatus());
         assertEquals("", response.readEntity(String.class));
+
+        response = new ResteasyClientBuilder().build().
+                target(server.getHost() + "/notifications").
+                request().
+                accept(APPLICATION_JSON_TYPE).get();
+        assertNotNull(response);
+        assertEquals(200, response.getStatus());
+        assertEquals("{\"total\":0,\"ids\":[]}", response.readEntity(String.class));
+
+        response = new ResteasyClientBuilder().build().
+                target(server.getHost() + "/notifications?count=1").
+                request().
+                accept(APPLICATION_JSON_TYPE).get();
+        assertNotNull(response);
+        assertEquals(200, response.getStatus());
+        assertEquals("{\"total\":0,\"ids\":[]}", response.readEntity(String.class));
+
+        response = new ResteasyClientBuilder().build().
+                target(server.getHost() + "/notifications?count=1&offset=-11").
+                request().
+                accept(APPLICATION_JSON_TYPE).get();
+        assertNotNull(response);
+        assertEquals(200, response.getStatus());
+        assertEquals("{\"total\":0,\"ids\":[]}", response.readEntity(String.class));
+
+        response = new ResteasyClientBuilder().build().
+                target(server.getHost() + "/notifications?count=0").
+                request().
+                accept(APPLICATION_JSON_TYPE).get();
+        assertNotNull(response);
+        assertEquals(200, response.getStatus());
+        assertEquals("{\"total\":0,\"ids\":[]}", response.readEntity(String.class));
     }
 
-    private void add(@Nonnull final String device, @Nonnull final String service) {
+    private void create(@Nonnull final String device, @Nonnull final String service) {
         final Response response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications/" + device + (service.isEmpty() ? "" : ('/' + service))).
                 request().
@@ -273,7 +330,7 @@ public class ApiPendingNotificationsTest {
         assertEquals(201, response.getStatus());
     }
 
-    private void remove(@Nonnull final String device, @Nonnull final String service) {
+    private void delete(@Nonnull final String device, @Nonnull final String service) {
         final Response response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications/" + device + (service.isEmpty() ? "" : ('/' + service))).
                 request().

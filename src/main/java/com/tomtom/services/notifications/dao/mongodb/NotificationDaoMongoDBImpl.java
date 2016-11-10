@@ -73,6 +73,7 @@ public class NotificationDaoMongoDBImpl implements NotificationDao {
         final MongoDBQuery query = new MongoDBQuery().exists(notificationMapper.deviceId);
         final long count = DaoUtils.count(collection, query);
         LOG.debug("getNrOfDeviceIds: count={}", count);
+        //noinspection NumericCastThatLosesPrecision
         return (int) count;
     }
 
