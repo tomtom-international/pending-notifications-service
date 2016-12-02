@@ -40,13 +40,13 @@ import javax.ws.rs.core.MediaType;
 @Path("/notifications")
 public interface PendingNotificationsResource {
 
-    public static final String PARAM_DEVICE_ID = "deviceId";
-    public static final String PARAM_SERVICE_ID = "serviceId";
-    public static final String PARAM_COUNT = "count";
-    public static final String PARAM_OFFSET = "offset";
+    String PARAM_DEVICE_ID = "deviceId";
+    String PARAM_SERVICE_ID = "serviceId";
+    String PARAM_COUNT = "count";
+    String PARAM_OFFSET = "offset";
 
-    public static final String DEFAULT_OFFSET = "0";
-    public static final String DEFAULT_COUNT = "1000";
+    String DEFAULT_OFFSET = "0";
+    String DEFAULT_COUNT = "1000";
 
     /**
      * Get all pending notifications, for all IDs. The returned body contains a list of all IDs with pending notifications
