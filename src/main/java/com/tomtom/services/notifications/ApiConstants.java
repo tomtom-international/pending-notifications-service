@@ -22,12 +22,6 @@ package com.tomtom.services.notifications;
  */
 public final class ApiConstants {
 
-    // Prevent instantiation.
-    private ApiConstants() {
-        super();
-        assert false;
-    }
-
     /**
      * General HTTP timeout for @Suspend() annotations.
      * The service will timeout after 30 seconds.
@@ -39,4 +33,10 @@ public final class ApiConstants {
      */
     public static final int API_VERSION_MAX_LENGTH = 25;
     public static final int API_VERSION_MIN_LENGTH = 0;
+
+    // Prevent instantiation.
+    private ApiConstants() {
+        super();
+        assert false;
+    }
 }

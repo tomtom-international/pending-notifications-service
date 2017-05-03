@@ -23,8 +23,6 @@ import com.tomtom.speedtools.mongodb.EntityRemoveException;
 import com.tomtom.speedtools.mongodb.EntityStoreException;
 import com.tomtom.speedtools.mongodb.InternalDaoException;
 import com.tomtom.speedtools.mongodb.mappers.MapperRegistry;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import javax.annotation.Nonnull;
 import javax.inject.Inject;
@@ -32,7 +30,6 @@ import java.util.List;
 import java.util.Set;
 
 public class NotificationDaoImpl implements NotificationDao {
-    private static final Logger LOG = LoggerFactory.getLogger(NotificationDaoImpl.class);
 
     @Nonnull
     private final NotificationDao currentNotificationDao;

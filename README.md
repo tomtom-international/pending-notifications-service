@@ -1,5 +1,6 @@
 # Read Me of the Pending Notification Service
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/597edfadc555400d9663af0026c43fd1)](https://www.codacy.com/app/rijnb/pending-notifications-service?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tomtom-international/pending-notifications-service&amp;utm_campaign=Badge_Grade)
 [![Build Status](https://img.shields.io/travis/tomtom-international/pending-notifications-service.svg?maxAge=3600)](https://travis-ci.org/tomtom-international/pending-notifications-service)
 [![Coverage Status](https://coveralls.io/repos/github/tomtom-international/pending-notifications-service/badge.svg?branch=master&maxAge=3600)](https://coveralls.io/github/tomtom-international/pending-notifications-service?branch=master)
 [![License](http://img.shields.io/badge/license-APACHE2-blue.svg)]()

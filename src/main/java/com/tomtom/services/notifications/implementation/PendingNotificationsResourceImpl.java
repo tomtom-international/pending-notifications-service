@@ -68,6 +68,8 @@ public class PendingNotificationsResourceImpl implements PendingNotificationsRes
             @Nonnull final DatabaseProperties databaseProperties,
             @Nonnull final NotificationDao notificationDao) {
         assert processor != null;
+        assert databaseProperties != null;
+        assert notificationDao != null;
 
         // Remember the injected processor.
         this.processor = processor;
