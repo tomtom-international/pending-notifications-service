@@ -109,7 +109,7 @@
         <guice.version>4.1.0</guice.version>
         <jsr305.version>3.0.2</jsr305.version>
         <log4j.version>1.2.17</log4j.version>
-        <mongo-java-driver.version>3.3.0</mongo-java-driver.version>
+        <mongo-java-driver.version>3.4.2</mongo-java-driver.version>
         <resteasy.version>3.0.19.Final</resteasy.version>
         <slf4j.version>1.7.25</slf4j.version>
         <speedtools.version>3.2.0</speedtools.version>
