@@ -105,14 +105,14 @@
         <javax.servlet-api.version>3.1.0</javax.servlet-api.version>
         <javax.inject.version>1</javax.inject.version>
         <junit.version>4.12</junit.version>
-        <guava.version>19.0</guava.version>
+        <guava.version>22.0</guava.version>
         <guice.version>4.1.0</guice.version>
-        <jsr305.version>3.0.0</jsr305.version>
+        <jsr305.version>3.0.2</jsr305.version>
         <log4j.version>1.2.17</log4j.version>
         <mongo-java-driver.version>3.3.0</mongo-java-driver.version>
         <resteasy.version>3.0.19.Final</resteasy.version>
-        <slf4j.version>1.7.21</slf4j.version>
-        <speedtools.version>3.1.0</speedtools.version>
+        <slf4j.version>1.7.25</slf4j.version>
+        <speedtools.version>3.2.0</speedtools.version>
     </properties>
 
     <dependencies>
@@ -193,12 +193,6 @@
 
         <dependency>
             <groupId>com.tomtom.speedtools</groupId>
-            <artifactId>mongodb</artifactId>
-            <version>${speedtools.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.tomtom.speedtools</groupId>
             <artifactId>resources</artifactId>
             <version>${speedtools.version}</version>
         </dependency>
@@ -214,6 +208,12 @@
             <artifactId>testutils</artifactId>
             <version>${speedtools.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.tomtom.speedtools</groupId>
+            <artifactId>tracer</artifactId>
+            <version>${speedtools.version}</version>
         </dependency>
 
         <dependency>
