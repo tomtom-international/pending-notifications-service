@@ -79,40 +79,19 @@
          warnings and errors to the logger, for debugging purposes.
     -->
     <listener>
-        <listener-class>
-            com.tomtom.speedtools.guice.LoggingGuiceResteasyBootstrapServletContextListener
-        </listener-class>
+        <listener-class>com.tomtom.speedtools.guice.LoggingGuiceResteasyBootstrapServletContextListener</listener-class>
     </listener>
 
     <!-- Include a custom listener for a shutdown request, to try and shut down the Akka
          system properly, so actors can flush their info, if required.
     -->
     <listener>
-        <listener-class>
-            com.tomtom.speedtools.rest.Shutdown
-        </listener-class>
+        <listener-class>com.tomtom.speedtools.rest.Shutdown</listener-class>
     </listener>
 
-    <!-- Include a custom listener for a shutdown request, to try and shut down the Akka
-         system properly, so actors can flush their info, if required.
-    -->
     <servlet>
         <servlet-name>Resteasy</servlet-name>
-
-        <!--
-            We use a custom dispatcher in order to be able to access the HttpServletRequest
-            in an Resteasy interceptor.
-        -->
-        <servlet-class>
-            com.tomtom.speedtools.rest.CustomHttpServlet30Dispatcher
-        </servlet-class>
-
-        <!-- Original servlet dispatcher:
-        <servlet-class>
-            org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
-        </servlet-class>
-        -->
-
+        <servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
         <async-supported>true</async-supported>
     </servlet>
 

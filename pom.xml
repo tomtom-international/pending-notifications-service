@@ -485,4 +485,18 @@
             </plugin>
         </plugins>
     </reporting>
+
+    <!-- Test profiles. -->
+    <profiles>
+        <profile>
+            <id>development</id>
+            <build>
+                <resources>
+                    <resource>
+                        <directory>external-resources</directory>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
 </project>
