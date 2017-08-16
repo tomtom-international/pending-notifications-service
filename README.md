@@ -316,6 +316,7 @@ In order to run the service, you need to make sure your system uses UTF-8 encodi
 If you run directly from Maven, this is best done by adding this environment variable to your shell:
 
     MAVEN_OPTS='-Dfile.encoding=UTF-8'
+    JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF8"
 
 The source uses Java JDK 1.8, so make sure your Java compiler is set to 1.8, for example
 using something like (MacOSX):
