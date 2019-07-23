@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * This class defines the data transfer object for the "/pending/version" method.
+ * This class defines the data transfer object for the "/version" method.
  * It contains only the version string, which is the POM version of the service.
  */
 @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")

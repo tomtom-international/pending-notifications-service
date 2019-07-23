@@ -54,26 +54,26 @@ public class HelperResourceImpl implements HelperResource {
     public String getHelpHTML() {
         LOG.info("getHelpHTML: show help page", mavenProperties.getPomVersion());
         return "<html><pre>\n" +
-                "WAKE-UP SERVICE (" + mavenProperties.getPomVersion() + ")\n" +
-                "---------------\n\n" +
+                "PENDING NOTIFICATIONS SERVICE (" + mavenProperties.getPomVersion() + ")\n" +
+                "-----------------------------\n\n" +
 
-                "The service exposes REST methods to manage wake-up calls for identities.\n\n" +
+                "The service exposes REST methods to manage pending notifications for identities.\n\n" +
 
                 "Called by devices:\n" +
-                "  GET    /pending/notifications/{deviceId}                 -- get pending notifications for a device\n" +
-                "                                                              (body contains service IDs, if available)\n" +
+                "  GET    /notifications/{deviceId}                 -- get pending notifications for a device\n" +
+                "                                                      (body contains service IDs, if available)\n" +
                 "Called by back-end services:\n" +
-                "  POST   /pending/notifications/{deviceId}                 -- create a pending notification for a device\n" +
-                "  POST   /pending/notifications/{deviceId}[/{serviceId}]   -- create a pending notification for a device, for a service\n" +
-                "  POST   /pending/notifications/{deviceId}                 -- delete all pending notifications for a device\n" +
-                "  DELETE /pending/notifications/{deviceId}[/{serviceId}]   -- delete a specific pending notifications for a device\n" +
-                "                                                              (removing the last one removes the entire entry))\n\n" +
+                "  POST   /notifications/{deviceId}                 -- create a pending notification for a device\n" +
+                "  POST   /notifications/{deviceId}[/{serviceId}]   -- create a pending notification for a device, for a service\n" +
+                "  POST   /notifications/{deviceId}                 -- delete all pending notifications for a device\n" +
+                "  DELETE /notifications/{deviceId}[/{serviceId}]   -- delete a specific pending notifications for a device\n" +
+                "                                                      (removing the last one removes the entire entry))\n\n" +
 
                 "Provided for deployment/monitoring:\n" +
-                "  GET    /pending/notifications[?offset={x}&count={y}]     -- get all IDs that have a wake-up call\n" +
-                "  GET    /pending                                          -- produces this help text\n" +
-                "  GET    /pending/version                                  -- returns the service version\n" +
-                "  GET    /pending/status                                   -- returns 204 if all OK\n" +
+                "  GET    /notifications[?offset={x}&count={y}]     -- get all IDs that have pending notifications\n" +
+                "  GET    /                                         -- produces this help text\n" +
+                "  GET    /version                                  -- returns the service version\n" +
+                "  GET    /status                                   -- returns 204 if all OK\n" +
 
                 "</pre></html>\n\n";
     }

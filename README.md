@@ -126,7 +126,7 @@ back to sleep and retry later.
 
 ### Sequence Diagram for Scenario 1
 
-    Device D                              Wake-Up Service
+    Device D                        Pending Notifications Service
     ----+---                              ------+--------
         |                                       |
         :                                       :
@@ -331,7 +331,7 @@ To build and run the REST API, type:
 Try out if the web services work by entering the following URL in your web browser
 (this should show you a HTML help page):
 
-    http://localhost:8080/pending
+    http://localhost:8080/
 
 Or use a tool like cURL:
 

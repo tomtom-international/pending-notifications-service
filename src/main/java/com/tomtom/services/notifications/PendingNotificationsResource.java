@@ -53,7 +53,7 @@ public interface PendingNotificationsResource {
      * calls (and an indication of the total number of notifications).
      *
      * This would normally be an authorized call; not available externally. Perhaps it would not even be needed.
-     * It was added here for REST consistency of the '/pending/notifications' collection handling.
+     * It was added here for REST consistency of the '/notifications' collection handling.
      *
      * @param offset   Return values from 'offset'. Range: &gt;= 0 counts from start, &lt; 0 counts from end.
      * @param count    Return 'count' values at most. Range: &gt;= 0.
