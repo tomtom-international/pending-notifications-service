@@ -1,11 +1,11 @@
-/**
- * Copyright (C) 2019, TomTom NV (http://www.tomtom.com)
+/*
+ * Copyright (C) 2012-2021, TomTom (http://tomtom.com).
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -26,8 +26,7 @@ import javax.annotation.Nonnull;
 import javax.ws.rs.core.Response;
 
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON_TYPE;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class ApiPendingNotificationsTest {
     private static final Logger LOG = LoggerFactory.getLogger(ApiPendingNotificationsTest.class);
@@ -54,7 +53,8 @@ public class ApiPendingNotificationsTest {
                 accept(APPLICATION_JSON_TYPE).get();
         assertNotNull(response);
         assertEquals(200, response.getStatus());
-        assertEquals("{\"total\":0,\"ids\":[]}", response.readEntity(String.class));
+        String actual = response.readEntity(String.class);
+        assertTrue("{\"total\":0}".equals(actual) || "{\"total\":0,\"ids\":[]}".equals(actual));
     }
 
     @Test
@@ -132,7 +132,8 @@ public class ApiPendingNotificationsTest {
                 accept(APPLICATION_JSON_TYPE).get();
         assertNotNull(response);
         assertEquals(200, response.getStatus());
-        assertEquals("{\"total\":2,\"ids\":[]}", response.readEntity(String.class));
+        String actual = response.readEntity(String.class);
+        assertTrue("{\"total\":2}".equals(actual) || "{\"total\":2,\"ids\":[]}".equals(actual));
 
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications?count=1&offset=-1").
@@ -295,7 +296,8 @@ public class ApiPendingNotificationsTest {
                 accept(APPLICATION_JSON_TYPE).get();
         assertNotNull(response);
         assertEquals(200, response.getStatus());
-        assertEquals("{\"total\":0,\"ids\":[]}", response.readEntity(String.class));
+        String actual = response.readEntity(String.class);
+        assertTrue("{\"total\":0}".equals(actual) || "{\"total\":0,\"ids\":[]}".equals(actual));
 
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications?count=1").
@@ -303,7 +305,8 @@ public class ApiPendingNotificationsTest {
                 accept(APPLICATION_JSON_TYPE).get();
         assertNotNull(response);
         assertEquals(200, response.getStatus());
-        assertEquals("{\"total\":0,\"ids\":[]}", response.readEntity(String.class));
+        actual = response.readEntity(String.class);
+        assertTrue("{\"total\":0}".equals(actual) || "{\"total\":0,\"ids\":[]}".equals(actual));
 
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications?count=1&offset=-11").
@@ -311,7 +314,8 @@ public class ApiPendingNotificationsTest {
                 accept(APPLICATION_JSON_TYPE).get();
         assertNotNull(response);
         assertEquals(200, response.getStatus());
-        assertEquals("{\"total\":0,\"ids\":[]}", response.readEntity(String.class));
+        actual = response.readEntity(String.class);
+        assertTrue("{\"total\":0}".equals(actual) || "{\"total\":0,\"ids\":[]}".equals(actual));
 
         response = new ResteasyClientBuilder().build().
                 target(server.getHost() + "/notifications?count=0").
@@ -319,7 +323,8 @@ public class ApiPendingNotificationsTest {
                 accept(APPLICATION_JSON_TYPE).get();
         assertNotNull(response);
         assertEquals(200, response.getStatus());
-        assertEquals("{\"total\":0,\"ids\":[]}", response.readEntity(String.class));
+        actual = response.readEntity(String.class);
+        assertTrue("{\"total\":0}".equals(actual) || "{\"total\":0,\"ids\":[]}".equals(actual));
     }
 
     private void create(@Nonnull final String device, @Nonnull final String service) {

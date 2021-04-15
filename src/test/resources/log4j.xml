@@ -38,18 +38,20 @@
     -->
 
     <!-- Make sure we get all messages from our own domain. -->
-    <logger name="com.tomtom.services.notifications">
+    <logger name="com.tomtom.speedtools.json.Json">
+        <level value="warn"/>
+    </logger>
+
+    <logger name="com.tomtom.speedtools">
         <level value="debug"/>
     </logger>
 
-    <!-- The SpeedTools framework. -->
-    <logger name="com.tomtom.speedtools">
-        <level value="info"/>
+    <logger name="com.tomtom.speedtools.tracer">
+        <level value="trace"/>
     </logger>
 
-    <!-- The JSON mapper shows a bit too much logging info sometimes, set it to warn. -->
-    <logger name="com.tomtom.speedtools.json.Json">
-        <level value="warn"/>
+    <logger name="test.tomtom.speedtools">
+        <level value="info"/>
     </logger>
 
     <logger name="org.apache">
@@ -66,7 +68,7 @@
     -->
 
     <root>
-        <priority value="info"/>
+        <priority value="debug"/>
         <appender-ref ref="console"/>
     </root>
 </log4j:configuration>
