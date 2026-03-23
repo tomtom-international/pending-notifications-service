@@ -6,6 +6,12 @@
 [![License](http://img.shields.io/badge/license-APACHE2-blue.svg)]()
 [![Release](https://img.shields.io/github/release/tomtom-international/pending-notifications-service.svg?maxAge=3600)](https://github.com/tomtom-international/pending-notifications-service/releases)
 
+## Important Notice
+
+This project serves as an example of how to build a simple REST-based notification service in Java.
+
+When used in production, proper authentication and authorization should be implemented.
+
 ## Introduction
 
 The *Pending Notification Service* offers a way to provide notifications for devices, which are retrieved in a polling
@@ -399,4 +405,3 @@ regular compile, build or release commands, such as:
 
 If you encounter any problems with this library, don't hesitate to use the `Issues` session to file your issues.
 Normally, one of our developers should be able to comment on them and fix.
-
