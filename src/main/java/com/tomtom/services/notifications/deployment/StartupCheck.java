@@ -27,7 +27,7 @@ import java.nio.charset.Charset;
 
 /**
  * This class provides a safe start up of the system. It provides basic checks required before startup is allowed. It
- * is abound as an eager Singleton by Guice in the {@link DeploymentModule}
+ * is bound as an eager Singleton by Guice in the {@link DeploymentModule}
  * by using "binder.bind(StartupCheck.class).asEagerSingleton()". This means the Singleton is instantiated right away.
  * <p> If any of the checks in the constructor of this class fail, an IllegalStateException is thrown and the
  * application will not continue to run. This prevents starting the system with, for example, incorrect database
@@ -66,10 +66,10 @@ public class StartupCheck {
         // Check encoding. The default character encoding for JSON is UTF8. UTF16 and UTF32 are also supported.
         // This is to make sure that byte conversions that rely on default encoding do not cause unexpected behaviour.
         check(REQUIRED_ENCODING.equals(Charset.defaultCharset().name()),
-                "The system default encoding must be UTF-8 (add '-Dfile.encoding=UTF-8' the JVM command line)." +
+                "The system default encoding must be UTF-8 (add '-Dfile.encoding=UTF-8' to the JVM command line)." +
                         " Current value=" + Charset.defaultCharset().name());
 
-        LOG.info("Startup: System started succesfully, POM version={}", mavenProperties.getPomVersion());
+        LOG.info("Startup: System started successfully, POM version={}", mavenProperties.getPomVersion());
     }
 
     private StartupCheck() {
@@ -79,18 +79,18 @@ public class StartupCheck {
     @SuppressWarnings("UseOfSystemOutOrSystemErr")
     private static void check(final boolean check, @Nonnull final String reason) {
         if (!check) {
-            LOG.error("check: System did NOT start succesfully.");
+            LOG.error("check: System did NOT start successfully.");
             LOG.error("check: Reason: {}", reason);
 
             System.err.println("");
             System.err.println("=======================================");
             System.err.println("ERROR");
             System.err.println("=======================================");
-            System.err.println("System did NOT start succesfully.");
+            System.err.println("System did NOT start successfully.");
             System.err.println("Reason: " + reason);
             System.err.println("=======================================");
             System.err.println("");
-            throw new IllegalStateException("System did NOT start succesfully.");
+            throw new IllegalStateException("System did NOT start successfully.");
         }
     }
 }

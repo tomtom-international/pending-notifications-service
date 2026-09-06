@@ -32,14 +32,14 @@ public class HelperResourceImpl implements HelperResource {
     private static final Logger LOG = LoggerFactory.getLogger(HelperResourceImpl.class);
 
     /**
-     * These properties (actually only 1) gets injected by Google Guice from the properties file supplied
+     * These properties (actually only 1) get injected by Google Guice from the properties file supplied
      * in the "resources" directory. It is used for the service version number, which equals the POM version.
      */
     @Nonnull
     private final MavenProperties mavenProperties;
 
     /**
-     * The root resources gets the Maven POM property injected by Google Guice at startup.
+     * The root resource gets the Maven POM property injected by Google Guice at startup.
      *
      * @param mavenProperties POM version.
      */
