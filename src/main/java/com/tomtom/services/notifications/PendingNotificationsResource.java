@@ -69,11 +69,11 @@ public interface PendingNotificationsResource {
             @Suspended @Nonnull AsyncResponse response);
 
     /**
-     * Get the pending notifications for a specific device. The result of this service call is just an HTTP result code.
+     * Get the pending notifications for a specific device. The result of this service call is just an HTTP result code,
      * possibly with a body which contains a list of service IDs.
      *
      * The returned list may be empty, which means that a ID-less (or nameless) service notification was POST-ed
-     * before. Note that notifications with and without an ID should not normally not be mixed, as notifications
+     * before. Note that notifications with and without an ID should not normally be mixed, as notifications
      * for ID-less services get lost when deleting the last notification for a service with an ID.
      *
      * This method would be available unauthenticated, as an HTTP service (!), externally.
